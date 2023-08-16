@@ -5,11 +5,17 @@
 
  
  public class LineFollower : MonoBehaviour {
-     
-     /// <summary>
-     /// Current main speed 
-     /// </summary>
-     public float speed;
+
+
+    public delegate void CharacterStartMovingDelegate();
+    public static event CharacterStartMovingDelegate OnCharacterStartMoving;
+
+    public delegate void CharacterReachDestinationDelegate();
+    public static event CharacterReachDestinationDelegate OnCharacterReachDestination;
+    /// <summary>
+    /// Current main speed 
+    /// </summary>
+    public float speed;
  
      /// <summary>
      /// The line that this follow.
@@ -59,10 +65,11 @@
              for(int i = 0; i< total; i++)
                  wayPoints[i] = temp[i];
          }
-         completed = false;
-     }
+         completed = false; OnCharacterStartMoving?.Invoke();
+    }
  
      void Start(){
+       
          Vector3 [] temp = new Vector3[500];
          int total = 0;
          if (lineToFollow != null){
@@ -113,10 +120,12 @@
      }
  
      void IncreaseIndex(){
-         currentPoint ++;
+      
+        currentPoint ++;
          if (currentPoint == wayPoints.Length) {
 
             endPointReached = true;
+            OnCharacterReachDestination?.Invoke();
              if (justOnce)
                  completed = true;
              else

@@ -5,6 +5,7 @@ using System.Linq;
 using System;
 using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(LineRenderer))]
 public class path : MonoBehaviour
 {
 
@@ -60,7 +61,7 @@ public class path : MonoBehaviour
                 if (Distancetolastpiont(hit.point) > .5f && drawLine)
                 {
 
-                    Vector3 adjustedPoint = new Vector3(hit.point.x, 0.1f, hit.point.z); // Set y to 0.1f
+                    Vector3 adjustedPoint = new Vector3(hit.point.x, 0.025f, hit.point.z); // Set y to 0.1f
                     pionts.Add(adjustedPoint);
                     lineRender.positionCount = pionts.Count;
                     lineRender.SetPositions(pionts.ToArray());

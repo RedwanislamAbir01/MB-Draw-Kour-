@@ -6,16 +6,33 @@ namespace _Game
 {
     public class AnimationController : MonoBehaviour
     {
-        // Start is called before the first frame update
+        [Header(" Settings ")]
+        private Animator animator;
+
         void Start()
         {
+
+         animator = GetComponent<Animator>();    
         
         }
-
-        // Update is called once per frame
-        void Update()
+        private void OnEnable()
         {
-        
+            LineFollower.OnCharacterStartMoving +=  PlayRunAnimation;
+            LineFollower.OnCharacterReachDestination += PlayIdleAnimation;
+        }
+        private void OnDestroy()
+        {
+            LineFollower.OnCharacterStartMoving -= PlayRunAnimation;
+            LineFollower.OnCharacterReachDestination -= PlayIdleAnimation;
+        }
+
+        void PlayRunAnimation()
+        {
+            animator.SetTrigger("Run");
+        }
+        void PlayIdleAnimation()
+        {
+            animator.SetTrigger("Idle");
         }
     }
 }
