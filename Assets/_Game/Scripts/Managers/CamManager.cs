@@ -22,18 +22,26 @@ namespace _Game
 
             // Subscribe to the event
             LineFollower.OnCharacterStartMoving += OnCharacterStartMoving;
+            LineFollower.OnCharacterReachDestination += OnDestinationReachedCllBack;
+            EnemyAnimationController.OnEnemyDeath += OnDestinationReachedCllBack;
         }
 
         private void OnDestroy()
         {
-            // Unsubscribe from the event to avoid memory leaks
+            EnemyAnimationController.OnEnemyDeath -= OnDestinationReachedCllBack;
             LineFollower.OnCharacterStartMoving -= OnCharacterStartMoving;
+            LineFollower.OnCharacterReachDestination -= OnDestinationReachedCllBack;
         }
 
         private void OnCharacterStartMoving()
         {
-            // Change follow cam priority when the event is fired
+            
             followCam.Priority = startCamPriority + 1;
+        }
+        private void OnDestinationReachedCllBack()
+        {
+            startCam.Priority = 2;
+            followCam.Priority = 1;
         }
     }
 }

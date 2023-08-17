@@ -1,11 +1,13 @@
-﻿ using System.Collections;
+﻿using _Game;
+using System.Collections;
  using System.Collections.Generic;
  using UnityEngine;
  
 
  
  public class LineFollower : MonoBehaviour {
-
+    public delegate void CharacterReachedEnemyDelegate();
+    public static event CharacterReachDestinationDelegate OnCharacterReachedEnemy;
 
     public delegate void CharacterStartMovingDelegate();
     public static event CharacterStartMovingDelegate OnCharacterStartMoving;
@@ -54,6 +56,8 @@
      public int currentPoint = 0;
 
     public bool endPointReached;
+
+    AnimationController controller;
      // Use this for initialization
      void OnEnable () {
          Vector3 [] temp = new Vector3[500];
@@ -65,11 +69,13 @@
              for(int i = 0; i< total; i++)
                  wayPoints[i] = temp[i];
          }
-         completed = false; OnCharacterStartMoving?.Invoke();
+         completed = false; 
+         OnCharacterStartMoving?.Invoke();
     }
  
      void Start(){
        
+        controller = GetComponentInChildren<AnimationController>();
          Vector3 [] temp = new Vector3[500];
          int total = 0;
          if (lineToFollow != null){
@@ -80,9 +86,10 @@
          }
          completed = false;
      }
-     
-     // Update is called once per frame
-     void LateUpdate () {
+
+
+    // Update is called once per frame
+    void LateUpdate () {
          if (completed){
              return;
              this.enabled = false;
@@ -126,6 +133,7 @@
 
             endPointReached = true;
             OnCharacterReachDestination?.Invoke();
+            OnReachDestination();
              if (justOnce)
                  completed = true;
              else
@@ -203,5 +211,47 @@
         }
     }
 
- 
- }
+    void OnReachDestination()
+    {
+       
+        FindAnyObjectByType<path>().ResetPath();
+        UpdateWayPoints();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            transform.LookAt(other.transform);
+            OnCharacterReachedEnemy?.Invoke();
+            EnemyAnimationController enemy = other.GetComponentInChildren<EnemyAnimationController>();
+            controller.AnimationPunchEventCallback(enemy);
+            ClearLine();
+        }
+    }
+
+
+
+    private void ClearLine()
+    {
+        FindAnyObjectByType<path>().ResetPath(); // Clear the line
+        UpdateWayPoints(); // Update waypoints and reset other necessary variables
+    }
+    void UpdateWayPoints()
+    {
+        Vector3[] temp = new Vector3[500];
+        int total = 0;
+        if (lineToFollow != null)
+        {
+            total = lineToFollow.GetPositions(temp);
+            wayPoints = new Vector3[total];
+            for (int i = 0; i < total; i++)
+            {
+                wayPoints[i] = temp[i];
+            }
+        }
+        completed = false;
+        currentPoint = 0; // Reset currentPoint to start from the beginning
+        endPointReached = false; // Reset end point reached flag
+    }
+}

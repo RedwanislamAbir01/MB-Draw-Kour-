@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ namespace _Game
         [Header(" Settings ")]
         private Animator animator;
 
+        public static event Action<EnemyAnimationController> OnPlayerPunchEvent;
         void Start()
         {
 
@@ -17,11 +19,14 @@ namespace _Game
         }
         private void OnEnable()
         {
+           
             LineFollower.OnCharacterStartMoving +=  PlayRunAnimation;
             LineFollower.OnCharacterReachDestination += PlayIdleAnimation;
+            LineFollower.OnCharacterReachedEnemy += PlayPunchAnimation;
         }
         private void OnDestroy()
         {
+            LineFollower.OnCharacterReachedEnemy -= PlayPunchAnimation;
             LineFollower.OnCharacterStartMoving -= PlayRunAnimation;
             LineFollower.OnCharacterReachDestination -= PlayIdleAnimation;
         }
@@ -33,6 +38,19 @@ namespace _Game
         void PlayIdleAnimation()
         {
             animator.SetTrigger("Idle");
+        }
+        void PlayPunchAnimation()
+        {
+            animator.SetTrigger("Punch");
+        }
+
+        public void AnimationPunchEventCallback(EnemyAnimationController enemy)
+        {
+            OnPlayerPunchEvent?.Invoke(enemy);
+        }
+        public void AnimationFinalHitEventCallback()
+        {
+            FindObjectOfType<EnemyAnimationController>().DeathAnim();
         }
     }
 }

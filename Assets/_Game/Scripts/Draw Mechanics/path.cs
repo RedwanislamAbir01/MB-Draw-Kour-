@@ -47,8 +47,8 @@ public class path : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
+            int layerMask = ~LayerMask.GetMask("Enemy");
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
             {
                 if (hit.transform.tag == "Player")
                 {
@@ -93,6 +93,13 @@ public class path : MonoBehaviour
         return Vector3.Distance(pionts.Last(), pioint);
 
 
+    }
+    public void ResetPath()
+    {
+        pionts.Clear();
+        lineRender.positionCount = 0;
+        drawLine = false;
+        lineRender.enabled = false;
     }
 
 }
