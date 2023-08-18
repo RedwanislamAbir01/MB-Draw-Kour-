@@ -23,14 +23,15 @@ namespace _Game
             // Subscribe to the event
             LineFollower.OnCharacterStartMoving += OnCharacterStartMoving;
             LineFollower.OnCharacterReachDestination += OnDestinationReachedCllBack;
-            EnemyAnimationController.OnEnemyDeath += OnDestinationReachedCllBack;
+            Enemy.OnDeathResetCam += OnDestinationReachedCllBack;
         }
 
         private void OnDestroy()
         {
-            EnemyAnimationController.OnEnemyDeath -= OnDestinationReachedCllBack;
+            Enemy.OnDeathResetCam -= OnDestinationReachedCllBack;
             LineFollower.OnCharacterStartMoving -= OnCharacterStartMoving;
-            LineFollower.OnCharacterReachDestination -= OnDestinationReachedCllBack;
+            LineFollower.OnCharacterReachDestination -= OnDestinationReachedCllBack;  
+
         }
 
         private void OnCharacterStartMoving()

@@ -1,4 +1,5 @@
 ﻿using _Game;
+using System;
 using System.Collections;
  using System.Collections.Generic;
  using UnityEngine;
@@ -6,8 +7,8 @@ using System.Collections;
 
  
  public class LineFollower : MonoBehaviour {
-    public delegate void CharacterReachedEnemyDelegate();
-    public static event CharacterReachDestinationDelegate OnCharacterReachedEnemy;
+  
+    public static event Action<Enemy> OnCharacterReachedEnemy;
 
     public delegate void CharacterStartMovingDelegate();
     public static event CharacterStartMovingDelegate OnCharacterStartMoving;
@@ -217,15 +218,13 @@ using System.Collections;
         FindAnyObjectByType<path>().ResetPath();
         UpdateWayPoints();
     }
-
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        Enemy enemy = other.GetComponent<Enemy>();
+        if (enemy != null)
         {
             transform.LookAt(other.transform);
-            OnCharacterReachedEnemy?.Invoke();
-            EnemyAnimationController enemy = other.GetComponentInChildren<EnemyAnimationController>();
-            controller.AnimationPunchEventCallback(enemy);
+            OnCharacterReachedEnemy?.Invoke(enemy); // Pass the enemy as a parameter
             ClearLine();
         }
     }

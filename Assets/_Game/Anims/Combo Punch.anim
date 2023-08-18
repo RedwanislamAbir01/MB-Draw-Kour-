@@ -60137,7 +60137,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 2.3333333
-    functionName: AnimationFinalHitEventCallback
+    functionName: AnimationPunchEventCallback
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

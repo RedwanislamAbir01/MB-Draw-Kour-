@@ -9,28 +9,30 @@ namespace _Game
     {
         public static event Action OnEnemyDeath;
         private Animator _animator;
+
+        Enemy enemy;
         private void Start()
         {
+            enemy = GetComponentInParent<Enemy>();
            _animator = GetComponent<Animator>();
-            AnimationController.OnPlayerPunchEvent += PlayPlayerHitAnimation;
+           enemy.OnHit += PlayPlayerHitAnimation;
+           enemy.OnDeath += DeathAnim;
         }
 
         private void OnDestroy()
         {
-           
-            AnimationController.OnPlayerPunchEvent -= PlayPlayerHitAnimation;
+            enemy.OnDeath += DeathAnim;
+            enemy.OnHit -= PlayPlayerHitAnimation;
         }
-        private void PlayPlayerHitAnimation(EnemyAnimationController enemy)
+        private void PlayPlayerHitAnimation()
         {
             _animator.SetTrigger("Hit");
-            print("Punched");
+
         }
 
-        public void DeathAnim()
+        private void DeathAnim()
         {
             _animator.SetTrigger("Die");
-            GetComponentInParent<Collider>().enabled = false;
-            OnEnemyDeath?.Invoke();
         }
     }
 }

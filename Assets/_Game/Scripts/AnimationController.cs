@@ -10,7 +10,7 @@ namespace _Game
         [Header(" Settings ")]
         private Animator animator;
 
-        public static event Action<EnemyAnimationController> OnPlayerPunchEvent;
+        private Enemy currentEnemy;
         void Start()
         {
 
@@ -39,18 +39,20 @@ namespace _Game
         {
             animator.SetTrigger("Idle");
         }
-        void PlayPunchAnimation()
+        void PlayPunchAnimation(Enemy enemy)
         {
+            currentEnemy = enemy;
             animator.SetTrigger("Punch");
         }
 
-        public void AnimationPunchEventCallback(EnemyAnimationController enemy)
+        public void AnimationPunchEventCallback()
         {
-            OnPlayerPunchEvent?.Invoke(enemy);
+            if (currentEnemy != null)
+            {
+                int damageAmount = 10; 
+                currentEnemy.TakeDamage(damageAmount);
+            }
         }
-        public void AnimationFinalHitEventCallback()
-        {
-            FindObjectOfType<EnemyAnimationController>().DeathAnim();
-        }
+
     }
 }
