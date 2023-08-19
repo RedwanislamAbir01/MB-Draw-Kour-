@@ -72,6 +72,7 @@ using System.Collections;
          }
          completed = false; 
          OnCharacterStartMoving?.Invoke();
+     
     }
  
      void Start(){
@@ -217,6 +218,7 @@ using System.Collections;
        
         FindAnyObjectByType<path>().ResetPath();
         UpdateWayPoints();
+       
     }
     void OnTriggerEnter(Collider other)
     {
@@ -253,4 +255,6 @@ using System.Collections;
         currentPoint = 0; // Reset currentPoint to start from the beginning
         endPointReached = false; // Reset end point reached flag
     }
+
+
 }

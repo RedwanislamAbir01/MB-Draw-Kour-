@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace _Game
 {
+    [DefaultExecutionOrder(100)]
     public class AnimationController : MonoBehaviour
     {
         [Header(" Settings ")]

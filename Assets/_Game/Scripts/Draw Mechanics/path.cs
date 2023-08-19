@@ -19,7 +19,7 @@ public class path : MonoBehaviour
 
   
     public List<Vector3> pionts = new List<Vector3>();
-
+    LineFollower lineFollower = null;
     private void Awake()
     {
         lineRender = GetComponent<LineRenderer>();
@@ -28,17 +28,20 @@ public class path : MonoBehaviour
     }
     void Start()
     {
-       
+        lineFollower = behaviour.GetComponent<LineFollower>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        print(drawLine + " drawline" );
+      
       
         if(drawLine)
-        {         
-            
+        {
+            if (!lineFollower.endPointReached)
+            {
+               
+            }
         }
 
         if (Input.GetKey(KeyCode.Mouse0))
@@ -61,7 +64,7 @@ public class path : MonoBehaviour
                 if (Distancetolastpiont(hit.point) > .5f && drawLine)
                 {
 
-                    Vector3 adjustedPoint = new Vector3(hit.point.x, 0.025f, hit.point.z); // Set y to 0.1f
+                    Vector3 adjustedPoint = new Vector3(hit.point.x, 0.025f, hit.point.z); // Set y to 0.025f
                     pionts.Add(adjustedPoint);
                     lineRender.positionCount = pionts.Count;
                     lineRender.SetPositions(pionts.ToArray());
