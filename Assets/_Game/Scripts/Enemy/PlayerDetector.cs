@@ -1,3 +1,4 @@
+using _Game.Managers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace _Game
         {
             if(other.gameObject.CompareTag("Player"))
             {
+                GameManager.Instance.LevelFail();
                 OnPlayerDetected?.Invoke();
             }
         }

@@ -100,7 +100,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 80
   DetectorCone: {fileID: 5399867208096293187}
-  enemyType: 1
+  enemyType: 0
+  patrolWaypoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  waypointWaitTime: 2
 --- !u!1 &4464145013410594944
 GameObject:
   m_ObjectHideFlags: 0
@@ -721,6 +725,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -153.03963
       objectReference: {fileID: 0}
+    - target: {fileID: 6337755906358019729, guid: 75838df0a41bbbe42b4f2da3a28784d4,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 420552343aead1f4a9a6b3c436e4df4d, type: 2}
     - target: {fileID: 6466361850095560129, guid: 75838df0a41bbbe42b4f2da3a28784d4,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -736,6 +745,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 171.59529
       objectReference: {fileID: 0}
+    - target: {fileID: 6800212809084600965, guid: 75838df0a41bbbe42b4f2da3a28784d4,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 420552343aead1f4a9a6b3c436e4df4d, type: 2}
     - target: {fileID: 8125072599660767300, guid: 75838df0a41bbbe42b4f2da3a28784d4,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
