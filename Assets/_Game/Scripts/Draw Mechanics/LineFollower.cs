@@ -1,4 +1,5 @@
 ﻿using _Game;
+using _Game.Managers;
 using System;
 using System.Collections;
  using System.Collections.Generic;
@@ -61,6 +62,9 @@ using System.Collections;
     AnimationController controller;
      // Use this for initialization
      void OnEnable () {
+
+        GameManager.Instance.OnLevelFail += StopMovement;
+
          Vector3 [] temp = new Vector3[500];
          int total = 0;
          if (lineToFollow != null){
@@ -74,8 +78,11 @@ using System.Collections;
          OnCharacterStartMoving?.Invoke();
      
     }
- 
-     void Start(){
+    private void OnDestroy()
+    {
+        GameManager.Instance.OnLevelFail -= StopMovement;
+    }
+    void Start(){
        
         controller = GetComponentInChildren<AnimationController>();
          Vector3 [] temp = new Vector3[500];
@@ -255,6 +262,6 @@ using System.Collections;
         currentPoint = 0; // Reset currentPoint to start from the beginning
         endPointReached = false; // Reset end point reached flag
     }
-
+    void StopMovement() => completed = true;
 
 }

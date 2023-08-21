@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine; // Make sure to import the Cinemachine namespace
+using _Game.Managers;
 
 namespace _Game
 {
@@ -10,28 +11,38 @@ namespace _Game
         [Header (" Settings ")]
         public CinemachineVirtualCamera startCam;
         public CinemachineVirtualCamera followCam;
+        public CinemachineVirtualCamera endCam;
 
         private int startCamPriority = 2;
         private int followCamPriority = 1;
+
+        private bool enemiesAreDead = false;
 
         private void Start()
         {
             // Set initial priorities
             startCam.Priority = startCamPriority;
             followCam.Priority = followCamPriority;
-
+            EnemyUICount.OnAllEnimiesDead += OnAllEnemiesDead;
             // Subscribe to the event
             LineFollower.OnCharacterStartMoving += OnCharacterStartMoving;
             LineFollower.OnCharacterReachDestination += OnDestinationReachedCllBack;
             Enemy.OnDeathResetCam += OnDestinationReachedCllBack;
+            GameManager.Instance.OnEolTrigger += OnEndOfLevelTrigger;
         }
 
         private void OnDestroy()
         {
+            GameManager.Instance.OnEolTrigger -= OnEndOfLevelTrigger;
             Enemy.OnDeathResetCam -= OnDestinationReachedCllBack;
             LineFollower.OnCharacterStartMoving -= OnCharacterStartMoving;
-            LineFollower.OnCharacterReachDestination -= OnDestinationReachedCllBack;  
-
+            LineFollower.OnCharacterReachDestination -= OnDestinationReachedCllBack;
+            EnemyUICount.OnAllEnimiesDead -= OnAllEnemiesDead;
+        }
+        private void OnAllEnemiesDead()
+        {
+            startCam.Priority = 4;
+            enemiesAreDead = true; // Set the flag
         }
 
         private void OnCharacterStartMoving()
@@ -41,8 +52,17 @@ namespace _Game
         }
         private void OnDestinationReachedCllBack()
         {
-            startCam.Priority = 2;
-            followCam.Priority = 1;
+
+            if (!enemiesAreDead) // Check the flag before changing camera priority
+            {
+                startCam.Priority = startCamPriority;
+                followCam.Priority = followCamPriority;
+            }
+        }
+        private void OnEndOfLevelTrigger()
+        {
+            // Update camera priorities when the event is triggered
+            endCam.Priority = 5;
         }
     }
 }

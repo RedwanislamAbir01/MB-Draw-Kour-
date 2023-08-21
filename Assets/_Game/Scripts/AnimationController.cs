@@ -20,13 +20,14 @@ namespace _Game
         }
         private void OnEnable()
         {
-           
+            PlayerActivity.OnHeliCopterJump += PlayJumpAnim;
             LineFollower.OnCharacterStartMoving +=  PlayRunAnimation;
             LineFollower.OnCharacterReachDestination += PlayIdleAnimation;
             LineFollower.OnCharacterReachedEnemy += PlayPunchAnimation;
         }
         private void OnDestroy()
         {
+            PlayerActivity.OnHeliCopterJump -= PlayJumpAnim;
             LineFollower.OnCharacterReachedEnemy -= PlayPunchAnimation;
             LineFollower.OnCharacterStartMoving -= PlayRunAnimation;
             LineFollower.OnCharacterReachDestination -= PlayIdleAnimation;
@@ -53,6 +54,11 @@ namespace _Game
                 int damageAmount = 10; 
                 currentEnemy.TakeDamage(damageAmount);
             }
+        }
+
+        public void PlayJumpAnim()
+        {
+            animator.SetTrigger("Jump");
         }
 
     }

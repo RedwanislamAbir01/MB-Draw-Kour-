@@ -13,26 +13,37 @@ namespace _Game
         Enemy enemy;
         private void Start()
         {
-            enemy = GetComponentInParent<Enemy>();
+           enemy = GetComponentInParent<Enemy>();
            _animator = GetComponent<Animator>();
            enemy.OnHit += PlayPlayerHitAnimation;
            enemy.OnDeath += DeathAnim;
+           enemy.OnStartMoving += RunAnim;
+           enemy.OnStopMoving += IdleAnim;
         }
 
         private void OnDestroy()
         {
-            enemy.OnDeath += DeathAnim;
+            enemy.OnStartMoving -= RunAnim;
+            enemy.OnStopMoving -= IdleAnim;
+            enemy.OnDeath -= DeathAnim;
             enemy.OnHit -= PlayPlayerHitAnimation;
         }
         private void PlayPlayerHitAnimation()
         {
             _animator.SetTrigger("Hit");
-
         }
 
         private void DeathAnim()
         {
             _animator.SetTrigger("Die");
+        }
+        private void IdleAnim ()
+        {
+            _animator.SetTrigger("Idle");
+        }
+        private void  RunAnim()
+        {
+            _animator.SetTrigger("Run");
         }
     }
 }
