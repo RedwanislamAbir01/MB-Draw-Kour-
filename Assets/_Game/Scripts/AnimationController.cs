@@ -39,6 +39,7 @@ namespace _Game
         }
         void PlayIdleAnimation()
         {
+            animator.ResetTrigger("Run");
             animator.SetTrigger("Idle");
         }
         void PlayPunchAnimation(Enemy enemy)

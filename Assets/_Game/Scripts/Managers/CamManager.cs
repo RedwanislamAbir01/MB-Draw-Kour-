@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine; // Make sure to import the Cinemachine namespace
 using _Game.Managers;
+using _Tools.Helpers;
 
 namespace _Game
 {
-    public class CamManager : MonoBehaviour
+    public class CamManager : Singleton<CamManager>
     {
         [Header (" Settings ")]
         public CinemachineVirtualCamera startCam;
@@ -47,7 +48,6 @@ namespace _Game
 
         private void OnCharacterStartMoving()
         {
-            
             followCam.Priority = startCamPriority + 1;
         }
         private void OnDestinationReachedCllBack()
@@ -63,6 +63,11 @@ namespace _Game
         {
             // Update camera priorities when the event is triggered
             endCam.Priority = 5;
+        }
+
+        public void EnableStartCam()
+        {
+            startCam.Priority = 4;
         }
     }
 }

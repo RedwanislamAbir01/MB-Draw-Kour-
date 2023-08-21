@@ -238,9 +238,7 @@ using System.Collections;
         }
     }
 
-
-
-    private void ClearLine()
+    public void ClearLine()
     {
         FindAnyObjectByType<path>().ResetPath(); // Clear the line
         UpdateWayPoints(); // Update waypoints and reset other necessary variables
