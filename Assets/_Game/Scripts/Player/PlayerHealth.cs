@@ -14,7 +14,8 @@ namespace _Game
         [SerializeField] private LayerMask _groundLayer;
         [SerializeField] private Animator _animator;
         [SerializeField] private float _deathDelay = 1f;
-        
+        [SerializeField]
+        private ParticleSystem _deathFx;
         private Rigidbody _rigidbody;
 
         private bool _isAlive;
@@ -41,7 +42,24 @@ namespace _Game
                 }
             }
         }
+        private void OnTriggerEnter(Collider other)
+        {
+            if(other.gameObject.CompareTag("Bullet"))
+            {
+                Instantiate(_deathFx, other.ClosestPoint(transform.position), Quaternion.identity);
 
+
+                _isAlive = false;
+
+                Destroy(other.gameObject);
+
+                _animator.SetTrigger(_Death);
+                
+                OnDeath?.Invoke(this, EventArgs.Empty);
+
+                GameManager.Instance.LevelFail();
+            }
+        }
         public bool IsAlive() => _isAlive;
 
         private IEnumerator DeathRoutine()

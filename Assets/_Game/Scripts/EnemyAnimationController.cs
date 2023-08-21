@@ -1,33 +1,53 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace _Game
 {
+    [RequireComponent(typeof(Animator))]  // Ensures that this component requires an Animator to function properly
     public class EnemyAnimationController : MonoBehaviour
     {
+        public event Action OnShoot;
         public static event Action OnEnemyDeath;
-        private Animator _animator;
 
-        Enemy enemy;
+        private Animator _animator;
+        private Enemy _enemy;
+        [SerializeField] private PlayerDetector _playerDetector;
+
         private void Start()
         {
-           enemy = GetComponentInParent<Enemy>();
-           _animator = GetComponent<Animator>();
-           enemy.OnHit += PlayPlayerHitAnimation;
-           enemy.OnDeath += DeathAnim;
-           enemy.OnStartMoving += RunAnim;
-           enemy.OnStopMoving += IdleAnim;
+            InitializeComponents();
+            HookUpEventHandlers();
         }
 
         private void OnDestroy()
         {
-            enemy.OnStartMoving -= RunAnim;
-            enemy.OnStopMoving -= IdleAnim;
-            enemy.OnDeath -= DeathAnim;
-            enemy.OnHit -= PlayPlayerHitAnimation;
+            UnhookEventHandlers();
         }
+
+        private void InitializeComponents()
+        {
+            _animator = GetComponent<Animator>();
+            _enemy = GetComponentInParent<Enemy>();
+        }
+
+        private void HookUpEventHandlers()
+        {
+            _enemy.OnHit += PlayPlayerHitAnimation;
+            _enemy.OnDeath += DeathAnim;
+            _enemy.OnStartMoving += RunAnim;
+            _enemy.OnStopMoving += IdleAnim;
+            _playerDetector.OnPlayerDetected += ShootAnim;
+        }
+
+        private void UnhookEventHandlers()
+        {
+            _enemy.OnHit -= PlayPlayerHitAnimation;
+            _enemy.OnDeath -= DeathAnim;
+            _enemy.OnStartMoving -= RunAnim;
+            _enemy.OnStopMoving -= IdleAnim;
+            _playerDetector.OnPlayerDetected -= ShootAnim;
+        }
+
         private void PlayPlayerHitAnimation()
         {
             _animator.SetTrigger("Hit");
@@ -36,14 +56,27 @@ namespace _Game
         private void DeathAnim()
         {
             _animator.SetTrigger("Die");
+            OnEnemyDeath?.Invoke();
         }
-        private void IdleAnim ()
+
+        private void IdleAnim()
         {
             _animator.SetTrigger("Idle");
         }
-        private void  RunAnim()
+
+        private void RunAnim()
         {
             _animator.SetTrigger("Run");
+        }
+
+        private void ShootAnim()
+        {
+            _animator.SetTrigger("Shoot");
+        }
+
+        private void OnShootCallBackEvent()
+        {
+            OnShoot?.Invoke();
         }
     }
 }
