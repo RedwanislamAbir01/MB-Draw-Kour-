@@ -20,14 +20,14 @@ namespace _Game
         }
         private void OnEnable()
         {
-            PlayerActivity.OnHeliCopterJump += PlayJumpAnim;
+            PlayerActivity.OnHeliCopterJump += PlayJumpToHelicopterAnim;
             LineFollower.OnCharacterStartMoving +=  PlayRunAnimation;
             LineFollower.OnCharacterReachDestination += PlayIdleAnimation;
             LineFollower.OnCharacterReachedEnemy += PlayPunchAnimation;
         }
         private void OnDestroy()
         {
-            PlayerActivity.OnHeliCopterJump -= PlayJumpAnim;
+            PlayerActivity.OnHeliCopterJump -= PlayJumpToHelicopterAnim;
             LineFollower.OnCharacterReachedEnemy -= PlayPunchAnimation;
             LineFollower.OnCharacterStartMoving -= PlayRunAnimation;
             LineFollower.OnCharacterReachDestination -= PlayIdleAnimation;
@@ -56,9 +56,9 @@ namespace _Game
             }
         }
 
-        public void PlayJumpAnim()
+        public void PlayJumpToHelicopterAnim()
         {
-            animator.SetTrigger("Jump");
+            animator.SetTrigger("JumpToHelicopter");
         }
 
     }

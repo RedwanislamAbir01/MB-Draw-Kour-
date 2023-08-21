@@ -1812,7 +1812,7 @@ PrefabInstance:
     - target: {fileID: 8720892976927279404, guid: 3e73d0f9bd290254d8b54b030f0c8ff0,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8720892978196060094, guid: 3e73d0f9bd290254d8b54b030f0c8ff0,
         type: 3}
@@ -2248,11 +2248,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fail Screen
       objectReference: {fileID: 0}
-    - target: {fileID: 4336030699697523373, guid: e22eb15f6e63c91478b42badf57e2260,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4336030699697523374, guid: e22eb15f6e63c91478b42badf57e2260,
         type: 3}
       propertyPath: m_Pivot.x
@@ -2356,6 +2351,11 @@ PrefabInstance:
     - target: {fileID: 4336030699697523374, guid: e22eb15f6e63c91478b42badf57e2260,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4336030700260945811, guid: e22eb15f6e63c91478b42badf57e2260,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
