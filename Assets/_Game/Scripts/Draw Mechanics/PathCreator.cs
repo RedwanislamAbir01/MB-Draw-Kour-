@@ -1,61 +1,65 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
 public class path : MonoBehaviour
 {
-    public MonoBehaviour behavior;
-    public LineRenderer lineRenderer;
-    public bool drawLine = false;
-    public LayerMask excludedLayers;
+    [SerializeField] private LineFollower _playerLineFollower;
+    [SerializeField] private float _lineYOffset;
+    [SerializeField] private bool _canDrawLine;
+    [SerializeField] private LayerMask _playerLayer;
+    [SerializeField] private LayerMask _targetDrawingLayer;
 
-    private List<Vector3> points = new List<Vector3>();
-    private LineFollower lineFollower = null;
+    private LineRenderer _lineRenderer;
+    private List<Vector3> _pointsList;
 
     private void Awake()
     {
-        lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.enabled = false;
-    }
-
-    private void Start()
-    {
-        lineFollower = behavior.GetComponent<LineFollower>();
+        _lineRenderer = GetComponent<LineRenderer>();
+        _lineRenderer.enabled = false;
+        
+        _pointsList = new List<Vector3>();
     }
 
     private void Update()
     {
-        if (drawLine && !lineFollower.endPointReached)
+        if (_canDrawLine && !_playerLineFollower.endPointReached)
         {
             // You can add logic here if needed for continuous path updates
         }
 
-        if (Input.GetKey(KeyCode.Mouse0))
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            // Use layer mask to exclude specific layers like "Enemy"
-            int layerMask = ~excludedLayers;
-
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+            if (Physics.Raycast(ray, out var hit, Mathf.Infinity, _playerLayer))
             {
                 if (hit.transform.CompareTag("Player"))
                 {
                     Time.timeScale = 0.0f;
-                    drawLine = true;
-                    lineRenderer.enabled = true;
+                    _canDrawLine = true;
+                    _lineRenderer.enabled = true;
                 }
-
-                if (DistanceToLastPoint(hit.point) > 0.5f && drawLine)
+            }
+        }
+        
+        if (Input.GetKey(KeyCode.Mouse0) && _canDrawLine)
+        {
+            if (Physics.Raycast(ray, out var hit, Mathf.Infinity, _targetDrawingLayer))
+            {
+                const float pointGapThreshold = 0.5f;
+                
+                if (DistanceToLastPoint(hit.point) > pointGapThreshold)
                 {
-                    Vector3 adjustedPoint = new Vector3(hit.point.x, 0.025f, hit.point.z);
-                    points.Add(adjustedPoint);
+                    // var adjustedPoint = new Vector3(hit.point.x, 0.025f, hit.point.z);
+                    var adjustedPoint = new Vector3(hit.point.x, hit.point.y + _lineYOffset, hit.point.z);
+                    _pointsList.Add(adjustedPoint);
 
-                    lineRenderer.positionCount = points.Count;
-                    lineRenderer.SetPositions(points.ToArray());
-                    LineSmoother.SmoothLine(points.ToArray(), 0.1f); // Not sure what this function does
+                    _lineRenderer.positionCount = _pointsList.Count;
+                    _lineRenderer.SetPositions(_pointsList.ToArray());
+                    
+                    // LOL
+                    LineSmoother.SmoothLine(_pointsList.ToArray(), 0.1f); // Not sure what this function does 
                 }
             }
         }
@@ -67,19 +71,16 @@ public class path : MonoBehaviour
 
     private float DistanceToLastPoint(Vector3 point)
     {
-        if (points.Count == 0)
-            return Mathf.Infinity;
-
-        return Vector3.Distance(points[points.Count - 1], point);
+        return _pointsList.Count == 0 ? Mathf.Infinity : Vector3.Distance(_pointsList[^1], point);
     }
 
     private void CompletePathCreation()
     {
         // Notify listeners about the new path
-        OnNewPathCreated(points);
+        OnNewPathCreated(_pointsList);
 
         // Enable or disable the behavior based on lineRenderer's state
-        behavior.enabled = lineRenderer.enabled;
+        _playerLineFollower.enabled = _lineRenderer.enabled;
 
         Time.timeScale = 1f;
     }
@@ -91,9 +92,9 @@ public class path : MonoBehaviour
 
     public void ResetPath()
     {
-        points.Clear();
-        lineRenderer.positionCount = 0;
-        drawLine = false;
-        lineRenderer.enabled = false;
+        _pointsList.Clear();
+        _lineRenderer.positionCount = 0;
+        _canDrawLine = false;
+        _lineRenderer.enabled = false;
     }
 }
