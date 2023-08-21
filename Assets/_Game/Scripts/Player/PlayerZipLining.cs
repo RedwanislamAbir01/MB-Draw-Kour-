@@ -17,7 +17,8 @@ namespace _Game
         {
             _lineFollower.ClearLine();
             _animator.SetTrigger(_Ziplining);
-
+            PlayerState.Instance.SetState(PlayerState.State.Parkour);
+            
             const float moveDuration = 0.1f;
             transform.DORotate(Vector3.zero, moveDuration);
             transform.DOMove(startPoint.position, moveDuration).OnComplete(() =>
@@ -26,8 +27,12 @@ namespace _Game
                 {
                     _animator.ResetTrigger(_Run);
                     _animator.SetTrigger(_Idle);
-                    transform.DOMove(dropPoint.position, moveDuration);
                     CamManager.Instance.EnableStartCam();
+                    
+                    transform.DOMove(dropPoint.position, moveDuration).OnComplete(() =>
+                    {
+                        PlayerState.Instance.SetState(PlayerState.State.Default);
+                    });
                 });
             });
         }

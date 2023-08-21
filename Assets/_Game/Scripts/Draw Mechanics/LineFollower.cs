@@ -58,9 +58,11 @@ using System.Collections;
      public int currentPoint = 0;
 
     public bool endPointReached;
-
+    
     AnimationController controller;
+    
      // Use this for initialization
+     
      void OnEnable () {
 
         GameManager.Instance.OnLevelFail += StopMovement;
@@ -76,11 +78,12 @@ using System.Collections;
          }
          completed = false; 
          OnCharacterStartMoving?.Invoke();
-     
-    }
+
+     }
     private void OnDestroy()
     {
         GameManager.Instance.OnLevelFail -= StopMovement;
+        PlayerHealth.OnDeath -= PlayerHealth_OnDeath; 
     }
     void Start(){
        
@@ -94,27 +97,37 @@ using System.Collections;
                  wayPoints[i] = temp[i];
          }
          completed = false;
+         
+         PlayerHealth.OnDeath += PlayerHealth_OnDeath; 
      }
 
+    private void PlayerHealth_OnDeath(object sender, EventArgs e)
+    {
+        ClearLine();
+    }
 
     // Update is called once per frame
-    void LateUpdate () {
-         if (completed){
-             return;
-             this.enabled = false;
-         }
-         if(0 < wayPoints.Length){
-             if (smooth)
-                 FollowSmooth ();
-             else {
-                 FollowClumsy ();
-             }
-         }
- 
-     }
- 
+    void LateUpdate()
+    {
+        if (completed)
+        {
+            return;
+            this.enabled = false;
+        }
 
-     Vector3 Prevoius(int index){
+        if (0 < wayPoints.Length)
+        {
+            if (smooth)
+                FollowSmooth();
+            else
+            {
+                FollowClumsy();
+            }
+        }
+    }
+
+
+    Vector3 Prevoius(int index){
          if (0 == index) {
              return wayPoints [wayPoints.Length - 1];
          } else {

@@ -52,7 +52,6 @@ namespace _Game
         }
         private void OnDestinationReachedCllBack()
         {
-
             if (!enemiesAreDead) // Check the flag before changing camera priority
             {
                 startCam.Priority = startCamPriority;
@@ -67,7 +66,8 @@ namespace _Game
 
         public void EnableStartCam()
         {
-            startCam.Priority = 4;
+            startCam.Priority = startCamPriority;
+            followCam.Priority = followCamPriority;
         }
     }
 }

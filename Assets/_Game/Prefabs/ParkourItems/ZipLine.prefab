@@ -149,7 +149,7 @@ Transform:
   - {fileID: 6470003393421909449}
   - {fileID: 4571641029697526014}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &8722403512625819116
 BoxCollider:
@@ -187,7 +187,7 @@ MonoBehaviour:
   _startPoint: {fileID: 5880958218288870095}
   _endPoint: {fileID: 6470003393421909449}
   _dropPoint: {fileID: 4571641029697526014}
-  _duration: 2
+  _duration: 1.5
 --- !u!1 &2457863566180386786
 GameObject:
   m_ObjectHideFlags: 0

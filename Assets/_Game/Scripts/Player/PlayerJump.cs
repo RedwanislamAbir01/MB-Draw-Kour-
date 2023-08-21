@@ -19,7 +19,7 @@ namespace _Game
         {
             if(_isJumping) return;
             
-            var ray = new Ray(transform.position, transform.forward * _detectionRange);
+            var ray = new Ray(transform.position, transform.forward);
 
             if (Physics.Raycast(ray, out var hitInfo, _detectionRange, _obstacleLayer))
             {
@@ -33,6 +33,7 @@ namespace _Game
         private void Jump(float jumpHeightOffset, float totalJumpDuration)
         {
             _isJumping = true;
+            PlayerState.Instance.SetState(PlayerState.State.Parkour);
             
             _animator.SetTrigger(_Jump);
 
@@ -43,6 +44,7 @@ namespace _Game
                 _visual.DOLocalMoveY(0f, duration).SetDelay(totalJumpDuration).OnComplete(() =>
                 {
                     _isJumping = false;
+                    PlayerState.Instance.SetState(PlayerState.State.Default);
                     _animator.SetTrigger(Run);
                 });
             });
