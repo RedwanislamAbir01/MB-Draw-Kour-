@@ -8267,6 +8267,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sliding Obj
       objectReference: {fileID: 0}
+    - target: {fileID: 4891289169528450451, guid: e2550d60c6afb58458ce2493bc072c94,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1.7888994
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891289169528450451, guid: e2550d60c6afb58458ce2493bc072c94,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 0.23530567
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891289169528450451, guid: e2550d60c6afb58458ce2493bc072c94,
+        type: 3}
+      propertyPath: m_Center.x
+      value: -0.078662395
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891289169528450451, guid: e2550d60c6afb58458ce2493bc072c94,
+        type: 3}
+      propertyPath: m_Center.z
+      value: -0.006088078
+      objectReference: {fileID: 0}
     - target: {fileID: 8317962861430953524, guid: e2550d60c6afb58458ce2493bc072c94,
         type: 3}
       propertyPath: m_RootOrder
