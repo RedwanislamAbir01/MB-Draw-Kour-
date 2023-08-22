@@ -275,4 +275,5 @@ using System.Collections;
     }
     void StopMovement() => completed = true;
 
-}
+    public float GetSpeed() => speed;
+ }

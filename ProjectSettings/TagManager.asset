@@ -12,6 +12,8 @@ TagManager:
   - Swimmer
   - Head
   - Bullet
+  - LeftTrigger
+  - RightTrigger
   layers:
   - Default
   - TransparentFX
