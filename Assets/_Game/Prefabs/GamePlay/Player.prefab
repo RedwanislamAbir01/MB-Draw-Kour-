@@ -308,6 +308,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 5950311970139612774}
   _lineFollower: {fileID: 278276850528706647}
+  _camOffset: {x: -3, y: 1.94, z: 0}
 --- !u!114 &2908648004693371077
 MonoBehaviour:
   m_ObjectHideFlags: 0

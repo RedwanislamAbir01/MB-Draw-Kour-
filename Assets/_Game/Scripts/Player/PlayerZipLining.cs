@@ -8,6 +8,7 @@ namespace _Game
     {
         [SerializeField] private Animator _animator;
         [SerializeField] private LineFollower _lineFollower;
+        [SerializeField] private Vector3 _camOffset;
         
         private static readonly int _Ziplining = Animator.StringToHash("Ziplining");
         private static readonly int _Idle = Animator.StringToHash("Idle");
@@ -18,6 +19,7 @@ namespace _Game
             _lineFollower.ClearLine();
             _animator.SetTrigger(_Ziplining);
             PlayerState.Instance.SetState(PlayerState.State.Parkour);
+            CamManager.Instance.SetFollowCamTrackedObjectOffset(_camOffset);
             
             const float moveDuration = 0.1f;
             transform.DORotate(Vector3.zero, moveDuration);
@@ -27,11 +29,12 @@ namespace _Game
                 {
                     _animator.ResetTrigger(_Run);
                     _animator.SetTrigger(_Idle);
-                    CamManager.Instance.EnableStartCam();
                     
                     transform.DOMove(dropPoint.position, moveDuration).OnComplete(() =>
                     {
                         PlayerState.Instance.SetState(PlayerState.State.Default);
+                        CamManager.Instance.EnableStartCam();
+                        CamManager.Instance.ResetFollowCamTrackedObjectOffset();
                     });
                 });
             });
