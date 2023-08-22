@@ -273,7 +273,7 @@ using System.Collections;
         currentPoint = 0; // Reset currentPoint to start from the beginning
         endPointReached = false; // Reset end point reached flag
     }
-    void StopMovement() => completed = true;
+    void StopMovement(float arg) => completed = true;
 
     public float GetSpeed() => speed;
  }

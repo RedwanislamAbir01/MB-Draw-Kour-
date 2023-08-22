@@ -1,3 +1,4 @@
+using System.Collections;
 using _Game.Managers;
 using UnityEngine.SceneManagement;
 using UnityEngine;
@@ -18,7 +19,16 @@ namespace _Game
         }
         private void DisableObj() => transform.GetChild(0).gameObject.SetActive(false);
 
-        private void EnableObj() => transform.GetChild(0).gameObject.SetActive(true);
+        private void EnableObj(float delay)
+        {
+            StartCoroutine(EnableRoutine(delay));
+        }
+
+        private IEnumerator EnableRoutine(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            transform.GetChild(0).gameObject.SetActive(true);
+        }
 
         public void RetryBtnCallBack()
         {

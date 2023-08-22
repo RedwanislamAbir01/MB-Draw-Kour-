@@ -11,13 +11,13 @@ namespace _Game.Managers
 
         public event Action OnLevelStart;
         public event Action OnLevelComplete;
-        public event Action OnLevelFail;
+        public event Action<float> OnLevelFail;
         public event Action OnEolTrigger;
         #endregion
 
         #region Variables
 
-        [SerializeField, Range(0f, 5f)] private float _levelLoadDelay = 1f;
+        [SerializeField, Range(0f, 10f)] private float _levelEndUIDelay = 2f;
 
         #endregion
 
@@ -39,7 +39,7 @@ namespace _Game.Managers
 
         public void LevelFail()
         {
-            OnLevelFail?.Invoke();
+            OnLevelFail?.Invoke(_levelEndUIDelay);
             
             //if (UIManager.Instance.IsNotNull(nameof(UIManager))) UIManager.Instance.LevelReloadTransition(_levelLoadDelay, SceneUtils.ReloadScene);
         }
