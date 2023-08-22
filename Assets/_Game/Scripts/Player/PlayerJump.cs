@@ -6,6 +6,8 @@ namespace _Game
     public class PlayerJump : MonoBehaviour
     {
         [SerializeField] private Animator _animator;
+        [SerializeField] private AnimationClip[] _jumpClips;
+        [SerializeField] private AnimatorOverrideController _animatorOverrideController;
         [SerializeField] private Transform _visual;
         [SerializeField] private float _detectionRange = 2f;
         [SerializeField] private LayerMask _obstacleLayer;
@@ -15,6 +17,14 @@ namespace _Game
         private static readonly int _Jump = Animator.StringToHash("Jump");
         private static readonly int Run = Animator.StringToHash("Run");
 
+        private void Start()
+        {
+            _animatorOverrideController = new AnimatorOverrideController
+            {
+                runtimeAnimatorController = _animator.runtimeAnimatorController
+            };
+        }
+        
         private void Update()
         {
             if(_isJumping) return;
@@ -34,6 +44,11 @@ namespace _Game
         {
             _isJumping = true;
             PlayerState.Instance.SetState(PlayerState.State.Parkour);
+
+            var randomIdx = Random.Range(0, _jumpClips.Length);
+            
+            _animatorOverrideController["Jumping"] = _jumpClips[randomIdx];
+            _animator.runtimeAnimatorController = _animatorOverrideController;
             
             _animator.SetTrigger(_Jump);
 

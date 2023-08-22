@@ -289,6 +289,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 5950311970139612774}
+  _jumpClips:
+  - {fileID: 1827226128182048838, guid: e956affee697557479f052d1a27cff87, type: 3}
+  - {fileID: 1827226128182048838, guid: 09ba234499133e04e8479c713474f28b, type: 3}
+  - {fileID: 1827226128182048838, guid: 445e881cb049b1245a2aeee5edd73b43, type: 3}
+  _animatorOverrideController: {fileID: 0}
   _visual: {fileID: 320861551102852124}
   _detectionRange: 2
   _obstacleLayer:
