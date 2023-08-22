@@ -30,10 +30,13 @@ namespace _Game
             LineFollower.OnCharacterReachDestination += OnDestinationReachedCllBack;
             Enemy.OnDeathResetCam += OnDestinationReachedCllBack;
             GameManager.Instance.OnEolTrigger += OnEndOfLevelTrigger;
+            GameManager.Instance.OnLevelComplete += StopCamFollow;
+
         }
 
         private void OnDestroy()
         {
+            GameManager.Instance.OnLevelComplete -= StopCamFollow;
             GameManager.Instance.OnEolTrigger -= OnEndOfLevelTrigger;
             Enemy.OnDeathResetCam -= OnDestinationReachedCllBack;
             LineFollower.OnCharacterStartMoving -= OnCharacterStartMoving;
@@ -68,6 +71,11 @@ namespace _Game
         {
             startCam.Priority = startCamPriority;
             followCam.Priority = followCamPriority;
+        }
+
+        void StopCamFollow()
+        {
+            endCam.Follow = null;
         }
     }
 }
