@@ -7,7 +7,7 @@ namespace _Game
     {
         [SerializeField] private Animator _animator;
         [SerializeField] private LineFollower _lineFollower;
-
+        
         private Vector3 _targetPosition;
         private bool _canMove;
         

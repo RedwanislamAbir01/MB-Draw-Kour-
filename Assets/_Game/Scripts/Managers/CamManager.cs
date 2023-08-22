@@ -14,6 +14,9 @@ namespace _Game
         public CinemachineVirtualCamera followCam;
         public CinemachineVirtualCamera endCam;
 
+        private CinemachineComposer _followCamComposer;
+        private Vector3 _followCamInitialTrackedObjectOffset;
+        
         private int startCamPriority = 2;
         private int followCamPriority = 1;
 
@@ -24,6 +27,10 @@ namespace _Game
             // Set initial priorities
             startCam.Priority = startCamPriority;
             followCam.Priority = followCamPriority;
+
+            _followCamComposer = followCam.GetCinemachineComponent<CinemachineComposer>();
+            _followCamInitialTrackedObjectOffset = _followCamComposer.m_TrackedObjectOffset;
+            
             EnemyUICount.OnAllEnimiesDead += OnAllEnemiesDead;
             // Subscribe to the event
             LineFollower.OnCharacterStartMoving += OnCharacterStartMoving;
@@ -76,6 +83,16 @@ namespace _Game
         void StopCamFollow()
         {
             endCam.Follow = null;
+        }
+
+        public void SetFollowCamTrackedObjectOffset(Vector3 offset)
+        {
+            _followCamComposer.m_TrackedObjectOffset = offset;
+        }
+        
+        public void ResetFollowCamTrackedObjectOffset()
+        {
+            _followCamComposer.m_TrackedObjectOffset = _followCamInitialTrackedObjectOffset;
         }
     }
 }
