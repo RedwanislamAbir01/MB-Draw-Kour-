@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using _Game.Managers;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
@@ -17,10 +18,18 @@ public class path : MonoBehaviour
     {
         _lineRenderer = GetComponent<LineRenderer>();
         _lineRenderer.enabled = false;
-        
+       
         _pointsList = new List<Vector3>();
     }
-
+    private void Start()
+    {
+        GameManager.Instance.OnEolTrigger += DisableLineFollower;
+    }
+    private void OnDestroy()
+    {
+        GameManager.Instance.OnEolTrigger -= DisableLineFollower;
+    }
+    void DisableLineFollower() { _playerLineFollower.enabled = false; ResetPath(); }
     private void Update()
     {
         if (_canDrawLine && !_playerLineFollower.endPointReached)

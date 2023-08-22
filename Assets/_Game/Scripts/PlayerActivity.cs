@@ -15,33 +15,29 @@ namespace _Game
         Collider collider;
         private void Start()
         {
-             collider = GetComponent<Collider>();
+            GameManager.Instance.OnEolTrigger += OnChopperReachedDestination;
+            collider = GetComponent<Collider>();
              rb = GetComponent<Rigidbody>();
         }
-        private void OnEnable()
-        {
-            // Subscribe to the ChopperReachedDestination event
-            ChopperActivity.OnChopperReachedDestination += OnChopperReachedDestination;
-        }
+ 
+
 
         private void OnDisable()
         {
             // Unsubscribe from the ChopperReachedDestination event
-            ChopperActivity.OnChopperReachedDestination -= OnChopperReachedDestination;
+            GameManager.Instance.OnEolTrigger -= OnChopperReachedDestination;
         }
         private void OnChopperReachedDestination()
         {
             PlayerState.Instance.SetState(PlayerState.State.Parkour);
             ChopperActivity chopperActivity = FindAnyObjectByType<ChopperActivity>();
-
-
-           
+            print(chopperActivity);
             OnHeliCopterJump?.Invoke();
-            transform.DOLocalJump(chopperActivity.StandPoint.transform.position  , 2, 1, .6f).OnComplete
+            transform.DOMove(new Vector3(chopperActivity.StandPoint.transform.position.x , transform.position.y , chopperActivity.StandPoint.transform.position.z) , 2f).OnComplete
             (
                 () =>
                 {
-                    transform.DOLocalMoveY(-1.5f, 01f);
+                   // transform.DOLocalMoveY(-1.5f, 01f);
                     rb.isKinematic = true;
                     transform.parent = chopperActivity.transform;
                     GameManager.Instance.LevelComplete();

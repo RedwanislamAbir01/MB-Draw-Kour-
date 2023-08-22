@@ -7,7 +7,7 @@ namespace _Game
 {
     public class EolTrigger : MonoBehaviour
     {
-
+        [SerializeField] private GameObject _visulas;
         private void Start()
         {
             DisableObj();
@@ -21,6 +21,8 @@ namespace _Game
         {
             if(other.gameObject.CompareTag("Player"))
             {
+                _visulas.SetActive(false);
+                GetComponent<Collider>().enabled = false;   
                 GameManager.Instance.EolTrigger();
             }
         }
