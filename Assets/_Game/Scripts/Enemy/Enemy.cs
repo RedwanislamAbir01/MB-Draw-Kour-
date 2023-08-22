@@ -119,7 +119,7 @@ public class Enemy : MonoBehaviour, IDamageable
             if (!isMoving)
             {
                 isMoving = true;
-                OnStartMoving?.Invoke();
+               
                 // Calculate the next waypoint index
                 int nextWaypointIndex = (currentWaypointIndex + 1) % patrolWaypoints.Length;
 
@@ -136,7 +136,7 @@ public class Enemy : MonoBehaviour, IDamageable
                     .SetEase(Ease.Linear)
                     .OnComplete(() =>
                     {
-                        
+                        OnStartMoving?.Invoke();
                         // Move towards the waypoint
                         transform.DOMove(patrolWaypoints[nextWaypointIndex].position, Vector3.Distance(transform.position, patrolWaypoints[nextWaypointIndex].position))
                             .SetEase(Ease.Linear)
