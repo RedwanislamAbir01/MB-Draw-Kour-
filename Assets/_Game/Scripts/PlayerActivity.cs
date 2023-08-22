@@ -12,9 +12,10 @@ namespace _Game
 
         Rigidbody rb;
 
-
+        Collider collider;
         private void Start()
         {
+             collider = GetComponent<Collider>();
              rb = GetComponent<Rigidbody>();
         }
         private void OnEnable()
@@ -30,16 +31,19 @@ namespace _Game
         }
         private void OnChopperReachedDestination()
         {
-          
-           
+            PlayerState.Instance.SetState(PlayerState.State.Parkour);
+            ChopperActivity chopperActivity = FindAnyObjectByType<ChopperActivity>();
 
+
+           
             OnHeliCopterJump?.Invoke();
-            transform.DOLocalJump(FindAnyObjectByType<ChopperActivity>().transform.position, 2, 1, .6f).OnComplete
+            transform.DOLocalJump(chopperActivity.StandPoint.transform.position  , 2, 1, .6f).OnComplete
             (
                 () =>
                 {
+                    transform.DOLocalMoveY(-1.5f, 01f);
                     rb.isKinematic = true;
-                    gameObject.SetActive(false);
+                    transform.parent = chopperActivity.transform;
                     GameManager.Instance.LevelComplete();
                 }
             );

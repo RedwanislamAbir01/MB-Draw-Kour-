@@ -75,7 +75,8 @@ namespace _Game
 
         void StopCamFollow()
         {
-            endCam.Follow = null;
+          //endCam.Follow = null;
+          
         }
     }
 }

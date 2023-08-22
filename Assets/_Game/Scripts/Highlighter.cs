@@ -1,3 +1,4 @@
+using _Game.Managers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,13 +15,15 @@ namespace _Game
         // Start is called before the first frame update
         void Start()
         {
+           
             // Find the first child of this GameObject
             if (transform.childCount > 0)
             {
                 firstChild = transform.GetChild(0);
             }
-        
+
             // Subscribe to events
+            GameManager.Instance.OnEolTrigger += DisableObj;
             Enemy.OnDeathResetCam += OnCharacterReachDestinationHandler;
             LineFollower.OnCharacterStartMoving += OnCharacterStartMovingHandler;
             LineFollower.OnCharacterReachDestination += OnCharacterReachDestinationHandler;
@@ -42,7 +45,7 @@ namespace _Game
                 firstChild.gameObject.SetActive(false);
             }
         }
-
+        void DisableObj() => gameObject.SetActive(false);
         private void OnCharacterReachDestinationHandler()
         {
             // Activate the first child
@@ -55,6 +58,7 @@ namespace _Game
         // Unsubscribe from events when the script is disabled or destroyed
         private void OnDisable()
         {
+            GameManager.Instance.OnEolTrigger -= DisableObj;
             Enemy.OnDeathResetCam -= OnCharacterReachDestinationHandler;
             LineFollower.OnCharacterStartMoving -= OnCharacterStartMovingHandler;
             LineFollower.OnCharacterReachDestination -= OnCharacterReachDestinationHandler;
