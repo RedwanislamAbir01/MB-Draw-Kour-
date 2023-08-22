@@ -10,6 +10,13 @@ namespace _Game
     {
         public static event Action OnHeliCopterJump;
 
+        Rigidbody rb;
+
+
+        private void Start()
+        {
+             rb = GetComponent<Rigidbody>();
+        }
         private void OnEnable()
         {
             // Subscribe to the ChopperReachedDestination event
@@ -23,11 +30,16 @@ namespace _Game
         }
         private void OnChopperReachedDestination()
         {
+          
+           
+
             OnHeliCopterJump?.Invoke();
             transform.DOLocalJump(FindAnyObjectByType<ChopperActivity>().transform.position, 2, 1, .6f).OnComplete
             (
                 () =>
                 {
+                    rb.isKinematic = true;
+                    gameObject.SetActive(false);
                     GameManager.Instance.LevelComplete();
                 }
             );
