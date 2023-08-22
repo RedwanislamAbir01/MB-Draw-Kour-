@@ -27,6 +27,17 @@ namespace _Game
             Enemy.OnDeathResetCam += OnCharacterReachDestinationHandler;
             LineFollower.OnCharacterStartMoving += OnCharacterStartMovingHandler;
             LineFollower.OnCharacterReachDestination += OnCharacterReachDestinationHandler;
+            LineFollower.OnCharacterReachedEnemy += DisableObject;
+            CamManager.OnCamReseting += OnCharacterReachDestinationHandler;
+        }
+        private void OnDisable()
+        {
+            CamManager.OnCamReseting -= OnCharacterReachDestinationHandler;
+            LineFollower.OnCharacterReachedEnemy -= DisableObject;
+            GameManager.Instance.OnEolTrigger -= DisableObj;
+            Enemy.OnDeathResetCam -= OnCharacterReachDestinationHandler;
+            LineFollower.OnCharacterStartMoving -= OnCharacterStartMovingHandler;
+            LineFollower.OnCharacterReachDestination -= OnCharacterReachDestinationHandler;
         }
         private void FixedUpdate()
         {
@@ -56,12 +67,15 @@ namespace _Game
         }
 
         // Unsubscribe from events when the script is disabled or destroyed
-        private void OnDisable()
+
+
+        void DisableObject(Enemy enemy)
         {
-            GameManager.Instance.OnEolTrigger -= DisableObj;
-            Enemy.OnDeathResetCam -= OnCharacterReachDestinationHandler;
-            LineFollower.OnCharacterStartMoving -= OnCharacterStartMovingHandler;
-            LineFollower.OnCharacterReachDestination -= OnCharacterReachDestinationHandler;
+
+            if (firstChild != null)
+            {
+                firstChild.gameObject.SetActive(false);
+            }
         }
-    }
+}
 }

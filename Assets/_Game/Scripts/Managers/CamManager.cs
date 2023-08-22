@@ -1,14 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using Cinemachine; // Make sure to import the Cinemachine namespace
 using _Game.Managers;
 using _Tools.Helpers;
+using System;
 
 namespace _Game
 {
     public class CamManager : Singleton<CamManager>
     {
+
+        public static event Action OnCamReseting;
         [Header (" Settings ")]
         public CinemachineVirtualCamera startCam;
         public CinemachineVirtualCamera followCam;
@@ -35,7 +37,7 @@ namespace _Game
             // Subscribe to the event
             LineFollower.OnCharacterStartMoving += OnCharacterStartMoving;
             LineFollower.OnCharacterReachDestination += OnDestinationReachedCllBack;
-            Enemy.OnDeathResetCam += OnDestinationReachedCllBack;
+            Enemy.OnDeathResetCam += OnDestinationReachedCllBackDelayed;
             GameManager.Instance.OnEolTrigger += OnEndOfLevelTrigger;
             GameManager.Instance.OnLevelComplete += StopCamFollow;
 
@@ -45,7 +47,7 @@ namespace _Game
         {
             GameManager.Instance.OnLevelComplete -= StopCamFollow;
             GameManager.Instance.OnEolTrigger -= OnEndOfLevelTrigger;
-            Enemy.OnDeathResetCam -= OnDestinationReachedCllBack;
+            Enemy.OnDeathResetCam -= OnDestinationReachedCllBackDelayed;
             LineFollower.OnCharacterStartMoving -= OnCharacterStartMoving;
             LineFollower.OnCharacterReachDestination -= OnDestinationReachedCllBack;
             EnemyUICount.OnAllEnimiesDead -= OnAllEnemiesDead;
@@ -62,6 +64,16 @@ namespace _Game
         }
         private void OnDestinationReachedCllBack()
         {
+            ResetRoutine();
+        }
+        private void OnDestinationReachedCllBackDelayed()
+        {
+            Invoke("ResetRoutine", 2f);
+        }
+
+        private void ResetRoutine()
+        {
+            OnCamReseting?.Invoke();
             if (!enemiesAreDead) // Check the flag before changing camera priority
             {
                 startCam.Priority = startCamPriority;

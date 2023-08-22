@@ -48,6 +48,7 @@ namespace _Game
             {
                 Instantiate(_deathFx, other.ClosestPoint(transform.position), Quaternion.identity);
 
+                GetComponent<Collider>().enabled = false;
 
                 _isAlive = false;
 

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,9 +13,11 @@ namespace _Game
         private Animator animator;
 
         private Enemy currentEnemy;
+
+        private GameObject parentObj;
         void Start()
         {
-
+         parentObj = transform.parent.gameObject;
          animator = GetComponent<Animator>();    
         
         }
@@ -24,9 +27,11 @@ namespace _Game
             LineFollower.OnCharacterStartMoving +=  PlayRunAnimation;
             LineFollower.OnCharacterReachDestination += PlayIdleAnimation;
             LineFollower.OnCharacterReachedEnemy += PlayPunchAnimation;
+            CamManager.OnCamReseting += ChildParentPosFix;
         }
         private void OnDestroy()
         {
+            CamManager.OnCamReseting -= ChildParentPosFix;
             PlayerActivity.OnHeliCopterJump -= PlayJumpToHelicopterAnim;
             LineFollower.OnCharacterReachedEnemy -= PlayPunchAnimation;
             LineFollower.OnCharacterStartMoving -= PlayRunAnimation;
@@ -44,15 +49,21 @@ namespace _Game
         }
         void PlayPunchAnimation(Enemy enemy)
         {
+            animator.applyRootMotion = true;
             currentEnemy = enemy;
             animator.SetTrigger("Punch");
+            AnimationPunchEventCallback(currentEnemy);
+            StartCoroutine(ResetRootMotionRoutine());
         }
-
-        public void AnimationPunchEventCallback()
+        private IEnumerator ResetRootMotionRoutine()
+        {  
+            yield return new WaitForSeconds(1.5f);
+        }
+        public void AnimationPunchEventCallback(Enemy enemy)
         {
             if (currentEnemy != null)
             {
-                int damageAmount = 10; 
+                int damageAmount = 100; 
                 currentEnemy.TakeDamage(damageAmount);
             }
         }
@@ -62,5 +73,20 @@ namespace _Game
             animator.SetTrigger("JumpToHelicopter");
         }
 
+
+        void ChildParentPosFix()
+        {
+            animator.applyRootMotion = false;
+
+            transform.parent = null;
+
+            Vector3 pos = new Vector3(transform.position.x, parentObj.transform.position.y, transform.position.z);
+
+            parentObj.transform.position = pos;
+
+            transform.parent = parentObj.transform;
+
+            transform.DOLocalRotate(new Vector3(0, 0, 0), .1f).SetDelay(.2f);
+        }
     }
 }

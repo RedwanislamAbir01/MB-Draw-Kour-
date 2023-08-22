@@ -55,7 +55,9 @@ namespace _Game
 
         private void DeathAnim()
         {
-            _animator.SetTrigger("Die");
+            _animator.applyRootMotion = true;
+            _animator.SetTrigger("Hit");
+          //  _animator.SetTrigger("Die");
             OnEnemyDeath?.Invoke();
         }
 
