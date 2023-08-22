@@ -11,6 +11,7 @@ TagManager:
   - FxTemporaire
   - Swimmer
   - Head
+  - Bullet
   layers:
   - Default
   - TransparentFX

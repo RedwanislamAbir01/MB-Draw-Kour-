@@ -1,7 +1,6 @@
 using _Game.Managers;
 using System;
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 namespace _Game
@@ -13,6 +12,7 @@ namespace _Game
         {
             if(other.gameObject.CompareTag("Player"))
             {
+                transform.parent.LookAt(other.transform.position);
                 GameManager.Instance.LevelFail();
                 OnPlayerDetected?.Invoke();
             }
