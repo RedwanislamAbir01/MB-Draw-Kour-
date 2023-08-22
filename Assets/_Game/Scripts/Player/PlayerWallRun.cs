@@ -68,6 +68,8 @@ namespace _Game
             {
                 _canMove = false;
                 PlayerState.Instance.SetState(PlayerState.State.Default);
+                
+                CamManager.Instance.EnableStartCam();
             });
         }
     }
