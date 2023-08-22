@@ -288,6 +288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 851da36565edf4b4b9cf78da2fc42f01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _lineFollower: {fileID: 278276850528706647}
   _animator: {fileID: 5950311970139612774}
   _jumpClips:
   - {fileID: 1827226128182048838, guid: e956affee697557479f052d1a27cff87, type: 3}

@@ -5,6 +5,7 @@ namespace _Game
 {
     public class PlayerJump : MonoBehaviour
     {
+        [SerializeField] private LineFollower _lineFollower;
         [SerializeField] private Animator _animator;
         [SerializeField] private AnimationClip[] _jumpClips;
         [SerializeField] private AnimatorOverrideController _animatorOverrideController;
@@ -35,9 +36,51 @@ namespace _Game
             {
                 if (hitInfo.transform.TryGetComponent(out IJumpable jumpable))
                 {
-                    Jump(jumpable.JumpHeightOffset, jumpable.TotalJumpDuration);
+                    if (_lineFollower.IsWayPointAvailable())
+                    {
+                        if(CheckIfPointBetweenObjects(transform, hitInfo.transform, _lineFollower.LastWayPoint()))
+                        {
+                            const float distance = 2.5f;
+                            var newPoint = _lineFollower.LastWayPoint() + transform.forward * distance;
+                            _lineFollower.AddToWayPoint(newPoint);
+                        }
+                        else
+                        {
+                            if (hitInfo.collider.bounds.Contains(_lineFollower.LastWayPoint()))
+                            {
+                                // Debug.Log("Inside");
+                                const float distance = 1.5f;
+                                var newPoint = _lineFollower.LastWayPoint() + transform.forward * distance;
+                                _lineFollower.AddToWayPoint(newPoint);
+                            }
+                            else
+                            {
+                                // Debug.Log("Outside");
+                                Jump(jumpable.JumpHeightOffset, jumpable.TotalJumpDuration);
+                            }
+                        }   
+                    }
                 }
             }
+        }
+        
+        private bool CheckIfPointBetweenObjects(Transform objectA, Transform objectB, Vector3 point)
+        {
+            var directionVector = objectB.position - objectA.position;
+            var vectorToObjectA = point - objectA.position;
+            var vectorToObjectB = point - objectB.position;
+
+            var dotProductA = Vector3.Dot(directionVector, vectorToObjectA);
+            var dotProductB = Vector3.Dot(directionVector, vectorToObjectB);
+
+            if (dotProductA > 0 && dotProductB < 0)
+            {
+                // Debug.Log("Point is between the objects.");
+                return true;
+            }
+
+            // Debug.Log("Point is NOT between the objects.");
+            return false;
         }
 
         private void Jump(float jumpHeightOffset, float totalJumpDuration)
@@ -60,7 +103,11 @@ namespace _Game
                 {
                     _isJumping = false;
                     PlayerState.Instance.SetState(PlayerState.State.Default);
-                    _animator.SetTrigger(Run);
+
+                    if (_lineFollower.IsWayPointAvailable())
+                    {
+                        _animator.SetTrigger(Run);
+                    }
                 });
             });
         }

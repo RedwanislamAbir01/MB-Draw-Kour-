@@ -50,7 +50,7 @@ using System.Collections;
      /// <summary>
      /// The points of the line
      /// </summary>
-     Vector3 [] wayPoints;
+     List<Vector3> wayPoints;
  
      /// <summary>
      /// The Current Point
@@ -72,9 +72,11 @@ using System.Collections;
          if (lineToFollow != null){
             
              total = lineToFollow.GetPositions(temp);
-             wayPoints = new Vector3[total];
+             wayPoints = new List<Vector3>();
+             wayPoints.Clear();
+             
              for(int i = 0; i< total; i++)
-                 wayPoints[i] = temp[i];
+                 wayPoints.Add(temp[i]);
          }
          completed = false; 
          OnCharacterStartMoving?.Invoke();
@@ -92,9 +94,11 @@ using System.Collections;
          int total = 0;
          if (lineToFollow != null){
              total = lineToFollow.GetPositions(temp);
-             wayPoints = new Vector3[total];
+             wayPoints = new List<Vector3>();
+             wayPoints.Clear();
+             
              for(int i = 0; i< total; i++)
-                 wayPoints[i] = temp[i];
+                 wayPoints.Add(temp[i]);
          }
          completed = false;
          
@@ -115,7 +119,7 @@ using System.Collections;
             this.enabled = false;
         }
 
-        if (0 < wayPoints.Length)
+        if (0 < wayPoints.Count)
         {
             if (smooth)
                 FollowSmooth();
@@ -129,7 +133,7 @@ using System.Collections;
 
     Vector3 Prevoius(int index){
          if (0 == index) {
-             return wayPoints [wayPoints.Length - 1];
+             return wayPoints [wayPoints.Count - 1];
          } else {
              return wayPoints [index - 1];
          }
@@ -141,7 +145,7 @@ using System.Collections;
      }
 
      Vector3 Next(int index){
-         if (wayPoints.Length == index+1) {
+         if (wayPoints.Count == index+1) {
              return wayPoints [0];
          } else {
              return wayPoints [index + 1];
@@ -151,7 +155,7 @@ using System.Collections;
      void IncreaseIndex(){
       
         currentPoint ++;
-         if (currentPoint == wayPoints.Length) {
+         if (currentPoint == wayPoints.Count) {
 
             endPointReached = true;
             OnCharacterReachDestination?.Invoke();
@@ -210,8 +214,8 @@ using System.Collections;
  
  
      Vector3[] SplitVertex(int numSplit){
-         Vector3[] ret = new Vector3[numSplit*wayPoints.Length];
-         for(int oldPoint = 0; oldPoint <wayPoints.Length; oldPoint++) {
+         Vector3[] ret = new Vector3[numSplit*wayPoints.Count];
+         for(int oldPoint = 0; oldPoint <wayPoints.Count; oldPoint++) {
              Vector3 anchor1 = Vector3.Lerp (Prevoius (oldPoint), Current (oldPoint), .5f);
              Vector3 anchor2 = Vector3.Lerp (Current (oldPoint), Next (oldPoint), .5f);
  
@@ -263,10 +267,12 @@ using System.Collections;
         if (lineToFollow != null)
         {
             total = lineToFollow.GetPositions(temp);
-            wayPoints = new Vector3[total];
+            wayPoints = new List<Vector3>();
+            wayPoints.Clear();
+            
             for (int i = 0; i < total; i++)
             {
-                wayPoints[i] = temp[i];
+                wayPoints.Add(temp[i]);
             }
         }
         completed = false;
@@ -276,4 +282,16 @@ using System.Collections;
     void StopMovement(float arg) => completed = true;
 
     public float GetSpeed() => speed;
+
+    public Vector3 LastWayPoint()
+    {
+        return IsWayPointAvailable() ? wayPoints[^1] : Vector3.zero;
+    }
+    
+    public bool IsWayPointAvailable() => wayPoints.Count > 0;
+
+    public void AddToWayPoint(Vector3 point)
+    {
+        wayPoints.Add(point);
+    }
  }
