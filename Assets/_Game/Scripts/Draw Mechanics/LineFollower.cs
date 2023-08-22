@@ -57,7 +57,7 @@ using System.Collections;
      /// </summary>
      public int currentPoint = 0;
 
-    public bool endPointReached;
+     public bool endPointReached;
     
     AnimationController controller;
     
