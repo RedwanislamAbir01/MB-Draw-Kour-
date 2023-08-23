@@ -9,6 +9,7 @@ namespace _Game
         [SerializeField] private LineFollower _lineFollower;
         
         private Vector3 _targetPosition;
+        private Vector3 _initialPosition;
         private bool _canMove;
         
         private static readonly int _WallRunStart = Animator.StringToHash("WallRunStart");
@@ -48,8 +49,9 @@ namespace _Game
             PlayerState.Instance.SetState(PlayerState.State.Parkour);
             
             transform.forward = direction;
+            _initialPosition = transform.position;
             _targetPosition = targetPosition;
-            
+
             _animator.ResetTrigger(_WallRunStop);
             _animator.SetTrigger(_WallRunStart);
 
@@ -64,7 +66,7 @@ namespace _Game
             _animator.SetTrigger(_WallRunStop);
             
             const float duration = 0.5f;
-            transform.DOMoveY(0f, duration).OnComplete(() =>
+            transform.DOMoveY(_initialPosition.y, duration).OnComplete(() =>
             {
                 _canMove = false;
                 PlayerState.Instance.SetState(PlayerState.State.Default);
