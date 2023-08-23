@@ -33,7 +33,7 @@ namespace _Game
             ChopperActivity chopperActivity = FindAnyObjectByType<ChopperActivity>();
             print(chopperActivity);
             OnHeliCopterJump?.Invoke();
-            transform.DOMove(new Vector3(chopperActivity.StandPoint.transform.position.x , transform.position.y , chopperActivity.StandPoint.transform.position.z) , 2f).OnComplete
+            transform.DOMove(new Vector3(chopperActivity.StandPoint.transform.position.x , chopperActivity.StandPoint.transform.position.y, chopperActivity.StandPoint.transform.position.z) , 2f).OnComplete
             (
                 () =>
                 {

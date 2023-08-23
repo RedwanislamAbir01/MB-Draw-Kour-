@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: 3513025734838161173}
   - component: {fileID: 8582352124849400129}
   - component: {fileID: 4041554676293815775}
+  - component: {fileID: 7770653106077344631}
   m_Layer: 13
   m_Name: Player
   m_TagString: Player
@@ -244,7 +245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c34950066460f29409447ad691951188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 8
   lineToFollow: {fileID: 0}
   justOnce: 1
   smooth: 0
@@ -406,6 +407,25 @@ MonoBehaviour:
   _jumpDuration2: 0.3
   _jumpDelay1: 0.5
   _jumpDelay2: 0.36
+--- !u!114 &7770653106077344631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4734992637744746899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50f6679b93ec6124691415594c08f296, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lineFollower: {fileID: 278276850528706647}
+  _animator: {fileID: 5950311970139612774}
+  _visual: {fileID: 320861551102852124}
+  _detectionRange: 2.5
+  _obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 16384
 --- !u!1 &7172750302169462237
 GameObject:
   m_ObjectHideFlags: 0

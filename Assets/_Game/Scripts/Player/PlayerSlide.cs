@@ -112,6 +112,7 @@ namespace _Game
                 _visual.DOLocalMoveY(slideDownDistance, slideDuration)
                     .OnComplete(() =>
                     {
+                        PlayerState.Instance.SetState(PlayerState.State.Default);
                         _visual.DOLocalMoveY(0f, slideUpDuration).SetDelay(slideUpDelay)
                             .OnComplete(CompleteSlide);
                     });
@@ -121,7 +122,7 @@ namespace _Game
             {
                 _isSliding = false;
 
-                PlayerState.Instance.SetState(PlayerState.State.Default);
+              
 
             if (_lineFollower.IsWayPointAvailable())
             {
