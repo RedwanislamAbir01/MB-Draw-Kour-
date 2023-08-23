@@ -2294,7 +2294,7 @@ PrefabInstance:
     - target: {fileID: 234899394011553714, guid: 06e3f253bc09f5f45897d9168d6d6aad,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 5.43
       objectReference: {fileID: 0}
     - target: {fileID: 234899394011553714, guid: 06e3f253bc09f5f45897d9168d6d6aad,
         type: 3}
@@ -9349,9 +9349,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50f6679b93ec6124691415594c08f296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _lineFollower: {fileID: 2118190442}
   _animator: {fileID: 854849165}
   _visual: {fileID: 854849167}
-  _detectionRange: 1
+  _detectionRange: 2.5
   _obstacleLayer:
     serializedVersion: 2
     m_Bits: 16384
@@ -9766,7 +9767,27 @@ PrefabInstance:
     - target: {fileID: 1153407844965761284, guid: e2550d60c6afb58458ce2493bc072c94,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891289169528450451, guid: e2550d60c6afb58458ce2493bc072c94,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1.9004289
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891289169528450451, guid: e2550d60c6afb58458ce2493bc072c94,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 0.19711494
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891289169528450451, guid: e2550d60c6afb58458ce2493bc072c94,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 0.06653696
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891289169528450451, guid: e2550d60c6afb58458ce2493bc072c94,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0.011433601
       objectReference: {fileID: 0}
     - target: {fileID: 8317962861430953524, guid: e2550d60c6afb58458ce2493bc072c94,
         type: 3}
