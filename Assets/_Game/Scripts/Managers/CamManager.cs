@@ -54,10 +54,13 @@ namespace _Game
         }
         private void OnAllEnemiesDead()
         {
-            startCam.Priority = 4;
+            Invoke("ResetRoutineStartCam", 2);
             enemiesAreDead = true; // Set the flag
         }
-
+        private void ResetRoutineStartCam()
+        {
+            startCam.Priority = 4;
+        }
         private void OnCharacterStartMoving()
         {
             followCam.Priority = startCamPriority + 1;
