@@ -9,17 +9,26 @@ namespace _Game
 
         [SerializeField] private GameObject _sign;
         [SerializeField] private PlayerDetector playerDetector;
+        
+        private Enemy _enemy;
+
+        private void Awake()
+        {
+            _enemy = GetComponentInParent<Enemy>();
+        }
+        
         private void Start()
         {
             _sign.SetActive(false);
            
             playerDetector.OnPlayerDetected += EnableExclematorySign;
-
+            LineFollower.OnCharacterReachedEnemy += EnableExclematorySign;
         }
   
         private void OnDisable()
         {
             playerDetector.OnPlayerDetected -= EnableExclematorySign;
+            LineFollower.OnCharacterReachedEnemy -= EnableExclematorySign;
         }
 
 
@@ -28,6 +37,14 @@ namespace _Game
             _sign.SetActive(true);
             StartCoroutine(SignDisableRoutine());
         }
+        
+        void EnableExclematorySign(Enemy enemy)
+        {
+            if(_enemy != enemy) return;
+            _sign.SetActive(true);
+            StartCoroutine(SignDisableRoutine());
+        }
+        
         IEnumerator SignDisableRoutine()
         {
             yield return new WaitForSeconds(2);

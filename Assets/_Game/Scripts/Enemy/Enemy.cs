@@ -34,6 +34,7 @@ public class Enemy : MonoBehaviour, IDamageable
     public float waypointWaitTime = 2.0f;
     private int currentWaypointIndex = 0;
     private bool isMoving = false;
+
     private void Start()
     {
         DetectorCone.SetActive(true);
@@ -73,16 +74,24 @@ public class Enemy : MonoBehaviour, IDamageable
         Debug.Log("Enemy morlo !");
         OnDeath?.Invoke();
         enemyCollider.enabled = false;
-        OnDeathResetCam?.Invoke();
-        PlayerState.Instance.DisableMoving();
+        StartCoroutine(DeathEffectRoutine());
     }
 
+    private IEnumerator DeathEffectRoutine()
+    {
+        const float firstDelay = 1f;
+        yield return new WaitForSeconds(firstDelay);
+        OnDeathResetCam?.Invoke();
+        const float secondDelay = 3f;
+        yield return new WaitForSeconds(secondDelay);
+        PlayerState.Instance.DisableMoving();
+    }
+    
     private void StopPatrolMechanics()
     {
         DOTween.Kill(transform);
         StopAllCoroutines(); // Stop the patrol routine
         DetectorCone.SetActive(false);
-        
     }
 
     private IEnumerator RotatingEnemyRoutine()

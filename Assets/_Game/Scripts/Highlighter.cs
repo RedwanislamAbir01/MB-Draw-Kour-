@@ -25,7 +25,7 @@ namespace _Game
 
             // Subscribe to events
             GameManager.Instance.OnEolTrigger += DisableObj;
-            Enemy.OnDeathResetCam += OnCharacterReachDestinationHandler;
+            // Enemy.OnDeathResetCam += OnCharacterReachDestinationHandler;
             LineFollower.OnCharacterStartMoving += OnCharacterStartMovingHandler;
             LineFollower.OnCharacterReachDestination += OnCharacterReachDestinationHandler;
             LineFollower.OnCharacterReachedEnemy += DisableObject;
@@ -38,7 +38,7 @@ namespace _Game
             CamManager.OnCamReseting -= OnCharacterReachDestinationHandler;
             LineFollower.OnCharacterReachedEnemy -= DisableObject;
             GameManager.Instance.OnEolTrigger -= DisableObj;
-            Enemy.OnDeathResetCam -= OnCharacterReachDestinationHandler;
+            // Enemy.OnDeathResetCam -= OnCharacterReachDestinationHandler;
             LineFollower.OnCharacterStartMoving -= OnCharacterStartMovingHandler;
             LineFollower.OnCharacterReachDestination -= OnCharacterReachDestinationHandler;
             PlayerState.Instance.OnMovementComplete -= PlayerState_OnMovementComplete;
