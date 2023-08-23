@@ -50,6 +50,7 @@ namespace _Game
                 {
                     _isJumping = false;
                     PlayerState.Instance.SetState(PlayerState.State.Default);
+                    CamManager.Instance.EnableStartCam();
                     PlayerState.Instance.DisableMoving();
                 });
             });
