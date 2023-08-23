@@ -15,6 +15,7 @@ namespace _Game
         [SerializeField] private float _jumpDelay1 = 0.5f;
         [SerializeField] private float _jumpDelay2 = 1f;
 
+        private Transform _basePoint;
         private bool _isJumping;
         
         private static readonly int _Climb = Animator.StringToHash("Climb");
@@ -27,6 +28,7 @@ namespace _Game
                 if(_isJumping) return;
                 
                 transform.rotation = other.transform.rotation;
+                _basePoint = other.transform.GetChild(0);
                 Jump();
             }
         }
@@ -39,8 +41,8 @@ namespace _Game
             _animator.SetTrigger(_Climb);
             PlayerState.Instance.SetState(PlayerState.State.Parkour);
             
-            var targetPosition1 = transform.position + transform.up * _yOffset1;
-            var targetPosition2 = transform.position + transform.forward * _zOffset + transform.up * _yOffset2;
+            var targetPosition1 = new Vector3(transform.position.x, _basePoint.position.y, transform.position.z) + transform.up * _yOffset1;
+            var targetPosition2 = new Vector3(transform.position.x, _basePoint.position.y, transform.position.z) + transform.forward * _zOffset + transform.up * _yOffset2;
             
             transform.DOMove(targetPosition1, _jumpDuration1).SetDelay(_jumpDelay1).OnComplete(() =>
             {
