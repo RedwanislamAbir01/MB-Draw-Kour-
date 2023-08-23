@@ -4026,7 +4026,7 @@ MonoBehaviour:
   _canDrawLine: 0
   _playerLayer:
     serializedVersion: 2
-    m_Bits: 8192
+    m_Bits: 32768
   _targetDrawingLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -4531,9 +4531,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1112143934}
-  m_LocalRotation: {x: 0.23498166, y: -0.0000000144821355, z: 0.0000000035010665,
-    w: 0.9719998}
-  m_LocalPosition: {x: 0.00000026507894, y: 6.698043, z: -35.065674}
+  m_LocalRotation: {x: 0.23498166, y: 0.000000014479931, z: -0.0000000035005336, w: 0.9719998}
+  m_LocalPosition: {x: -0.00000026503855, y: 6.698043, z: -35.065674}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

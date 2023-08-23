@@ -20,6 +20,7 @@ namespace _Game
 
         private bool _isAlive;
         private static readonly int _Death = Animator.StringToHash("Death");
+        private static readonly int _Fall = Animator.StringToHash("Fall");
 
         private void Awake()
         {
@@ -38,7 +39,7 @@ namespace _Game
                 if (!PlayerState.Instance.IsDoingParkour())
                 {
                     _isAlive = false;
-                    StartCoroutine(DeathRoutine());
+                    StartCoroutine(DeathRoutine(true));
                 }
             }
         }
@@ -63,12 +64,12 @@ namespace _Game
         }
         public bool IsAlive() => _isAlive;
 
-        private IEnumerator DeathRoutine()
+        private IEnumerator DeathRoutine(bool isDeathByFall = false)
         {
             yield return new WaitForSeconds(_deathDelay);
-            
-            _animator.SetTrigger(_Death);
-                    
+
+            _animator.SetTrigger(isDeathByFall ? _Fall : _Death);
+
             _rigidbody.useGravity = true;
             _rigidbody.isKinematic = false;
             
