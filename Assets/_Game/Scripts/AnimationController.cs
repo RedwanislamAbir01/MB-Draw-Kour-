@@ -28,6 +28,7 @@ namespace _Game
             LineFollower.OnCharacterReachDestination += PlayIdleAnimation;
             LineFollower.OnCharacterReachedEnemy += PlayPunchAnimation;
             CamManager.OnCamReseting += ChildParentPosFix;
+            LineFollower.OnCharacterStopped += PlayIdleAnimation;
         }
         private void OnDestroy()
         {
@@ -36,6 +37,7 @@ namespace _Game
             LineFollower.OnCharacterReachedEnemy -= PlayPunchAnimation;
             LineFollower.OnCharacterStartMoving -= PlayRunAnimation;
             LineFollower.OnCharacterReachDestination -= PlayIdleAnimation;
+            LineFollower.OnCharacterStopped -= PlayIdleAnimation;
         }
 
         void PlayRunAnimation()
