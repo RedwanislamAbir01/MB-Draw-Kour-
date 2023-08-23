@@ -298,6 +298,7 @@ MonoBehaviour:
   _animatorOverrideController: {fileID: 22100000, guid: 07a46798bfdd6a34f9472e8918de6b42,
     type: 2}
   _visual: {fileID: 320861551102852124}
+  _rayStartPoint: {fileID: 65693113952795108}
   _detectionRange: 2
   _obstacleLayer:
     serializedVersion: 2
@@ -497,7 +498,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8553792756492780907}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

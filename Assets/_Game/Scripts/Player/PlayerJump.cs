@@ -10,6 +10,7 @@ namespace _Game
         [SerializeField] private AnimationClip[] _jumpClips;
         [SerializeField] private AnimatorOverrideController _animatorOverrideController;
         [SerializeField] private Transform _visual;
+        [SerializeField] private Transform _rayStartPoint;
         [SerializeField] private float _detectionRange = 2f;
         [SerializeField] private LayerMask _obstacleLayer;
 
@@ -30,7 +31,7 @@ namespace _Game
         {
             if(_isJumping) return;
             
-            var ray = new Ray(transform.position, transform.forward);
+            var ray = new Ray(_rayStartPoint.position, _rayStartPoint.forward);
 
             if (Physics.Raycast(ray, out var hitInfo, _detectionRange, _obstacleLayer))
             {
@@ -117,7 +118,7 @@ namespace _Game
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.yellow;
-            Gizmos.DrawRay(transform.position, transform.forward * _detectionRange);
+            Gizmos.DrawRay(_rayStartPoint.position, _rayStartPoint.forward * _detectionRange);
             Gizmos.color = Color.white;
         }
 #endif
