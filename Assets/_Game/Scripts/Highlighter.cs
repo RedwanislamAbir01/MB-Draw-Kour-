@@ -1,3 +1,4 @@
+using System;
 using _Game.Managers;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,7 +30,9 @@ namespace _Game
             LineFollower.OnCharacterReachDestination += OnCharacterReachDestinationHandler;
             LineFollower.OnCharacterReachedEnemy += DisableObject;
             CamManager.OnCamReseting += OnCharacterReachDestinationHandler;
+            PlayerState.Instance.OnMovementComplete += PlayerState_OnMovementComplete;
         }
+
         private void OnDisable()
         {
             CamManager.OnCamReseting -= OnCharacterReachDestinationHandler;
@@ -38,6 +41,7 @@ namespace _Game
             Enemy.OnDeathResetCam -= OnCharacterReachDestinationHandler;
             LineFollower.OnCharacterStartMoving -= OnCharacterStartMovingHandler;
             LineFollower.OnCharacterReachDestination -= OnCharacterReachDestinationHandler;
+            PlayerState.Instance.OnMovementComplete -= PlayerState_OnMovementComplete;
         }
         private void FixedUpdate()
         {
@@ -60,6 +64,14 @@ namespace _Game
         private void OnCharacterReachDestinationHandler()
         {
             // Activate the first child
+            if (firstChild != null)
+            {
+                firstChild.gameObject.SetActive(true);
+            }
+        }
+        
+        private void PlayerState_OnMovementComplete(object sender, EventArgs e)
+        {
             if (firstChild != null)
             {
                 firstChild.gameObject.SetActive(true);

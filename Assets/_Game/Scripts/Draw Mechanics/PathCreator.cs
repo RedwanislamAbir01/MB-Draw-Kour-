@@ -1,5 +1,6 @@
 ﻿using _Game.Managers;
 using System.Collections.Generic;
+using _Game;
 using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
@@ -37,6 +38,8 @@ public class path : MonoBehaviour
             // You can add logic here if needed for continuous path updates
         }
 
+        if (PlayerState.Instance.IsMoving()) return;
+        
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         
         if (Input.GetKeyDown(KeyCode.Mouse0))

@@ -62,27 +62,30 @@ using System.Collections;
     AnimationController controller;
     
      // Use this for initialization
-     
-     void OnEnable () {
 
-        GameManager.Instance.OnLevelFail += StopMovement;
+     void OnEnable()
+     {
+         GameManager.Instance.OnLevelFail += StopMovement;
 
-         Vector3 [] temp = new Vector3[500];
+         Vector3[] temp = new Vector3[500];
          int total = 0;
-         if (lineToFollow != null){
-            
+         if (lineToFollow != null)
+         {
+
              total = lineToFollow.GetPositions(temp);
              wayPoints = new List<Vector3>();
              wayPoints.Clear();
-             
-             for(int i = 0; i< total; i++)
+
+             for (int i = 0; i < total; i++)
                  wayPoints.Add(temp[i]);
          }
-         completed = false; 
-         OnCharacterStartMoving?.Invoke();
 
+         completed = false;
+         OnCharacterStartMoving?.Invoke();
+         PlayerState.Instance.EnableMoving();
      }
-    private void OnDestroy()
+
+     private void OnDestroy()
     {
         GameManager.Instance.OnLevelFail -= StopMovement;
         PlayerHealth.OnDeath -= PlayerHealth_OnDeath; 
@@ -151,24 +154,26 @@ using System.Collections;
              return wayPoints [index + 1];
          }
      }
- 
-     void IncreaseIndex(){
-      
-        currentPoint ++;
-         if (currentPoint == wayPoints.Count) {
 
-            endPointReached = true;
-            OnCharacterReachDestination?.Invoke();
-            OnReachDestination();
+     void IncreaseIndex()
+     {
+
+         currentPoint++;
+         if (currentPoint == wayPoints.Count)
+         {
+
+             endPointReached = true;
+             OnCharacterReachDestination?.Invoke();
+             PlayerState.Instance.DisableMoving();
+             
+             OnReachDestination();
              if (justOnce)
                  completed = true;
              else
                  currentPoint = 0;
          }
      }
- 
- 
- 
+
      void FollowClumsy(){
      
        Vector3 lTargetDir = Current(currentPoint) - transform.position;

@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System;
 using System.Collections;
+using _Game;
 using UnityEngine;
 
 public interface IDamageable
@@ -73,7 +74,7 @@ public class Enemy : MonoBehaviour, IDamageable
         OnDeath?.Invoke();
         enemyCollider.enabled = false;
         OnDeathResetCam?.Invoke();
-    
+        PlayerState.Instance.DisableMoving();
     }
 
     private void StopPatrolMechanics()

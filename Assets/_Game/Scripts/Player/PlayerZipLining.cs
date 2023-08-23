@@ -35,6 +35,7 @@ namespace _Game
                         PlayerState.Instance.SetState(PlayerState.State.Default);
                         CamManager.Instance.EnableStartCam();
                         CamManager.Instance.ResetFollowCamTrackedObjectOffset();
+                        PlayerState.Instance.DisableMoving();
                     });
                 });
             });

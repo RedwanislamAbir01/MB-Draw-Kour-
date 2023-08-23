@@ -70,6 +70,7 @@ namespace _Game
                 PlayerState.Instance.SetState(PlayerState.State.Default);
                 
                 CamManager.Instance.EnableStartCam();
+                PlayerState.Instance.DisableMoving();
             });
         }
     }
