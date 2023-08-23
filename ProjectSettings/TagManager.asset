@@ -15,6 +15,7 @@ TagManager:
   - LeftTrigger
   - RightTrigger
   - Chopper
+  - WallJumpTrigger
   layers:
   - Default
   - TransparentFX

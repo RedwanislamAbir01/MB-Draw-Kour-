@@ -106,6 +106,7 @@ GameObject:
   - component: {fileID: 6704453185761030808}
   - component: {fileID: 3513025734838161173}
   - component: {fileID: 8582352124849400129}
+  - component: {fileID: 4041554676293815775}
   m_Layer: 13
   m_Name: Player
   m_TagString: Player
@@ -294,7 +295,8 @@ MonoBehaviour:
   - {fileID: 1827226128182048838, guid: e956affee697557479f052d1a27cff87, type: 3}
   - {fileID: 1827226128182048838, guid: 09ba234499133e04e8479c713474f28b, type: 3}
   - {fileID: 1827226128182048838, guid: 445e881cb049b1245a2aeee5edd73b43, type: 3}
-  _animatorOverrideController: {fileID: 0}
+  _animatorOverrideController: {fileID: 22100000, guid: 07a46798bfdd6a34f9472e8918de6b42,
+    type: 2}
   _visual: {fileID: 320861551102852124}
   _detectionRange: 2
   _obstacleLayer:
@@ -328,7 +330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rayStartPoint: {fileID: 65693113952795108}
-  _rayLength: 1
+  _rayLength: 5
   _groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -382,6 +384,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 5950311970139612774}
   _lineFollower: {fileID: 278276850528706647}
+--- !u!114 &4041554676293815775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4734992637744746899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f914cdfa18f45bda77723378d180094, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 5950311970139612774}
+  _lineFollower: {fileID: 278276850528706647}
+  _yOffset1: 1.2
+  _yOffset2: 4.4
+  _zOffset: 1.8
+  _jumpDuration1: 0.7
+  _jumpDuration2: 0.3
+  _jumpDelay1: 0.5
+  _jumpDelay2: 0.36
 --- !u!1 &7172750302169462237
 GameObject:
   m_ObjectHideFlags: 0
