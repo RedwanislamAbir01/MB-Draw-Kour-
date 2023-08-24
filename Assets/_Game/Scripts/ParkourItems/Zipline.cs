@@ -11,6 +11,7 @@ namespace _Game
         [SerializeField] private float _zipDuration = 2f;
         [SerializeField] private GameObject _startHandle;
         [SerializeField] private GameObject _endHandle;
+        [SerializeField] private ParticleSystem _landEffect;
 
         private void Awake()
         {
@@ -21,7 +22,7 @@ namespace _Game
         {
             if(other.transform.TryGetComponent(out PlayerZipLining playerZipLining))
             {
-                playerZipLining.ZipLine(_startPoint, _endPoint, _dropPoint, _jumpDuration, _zipDuration, _startHandle, _endHandle);
+                playerZipLining.ZipLine(_startPoint, _endPoint, _dropPoint, _jumpDuration, _zipDuration, _startHandle, _endHandle, _landEffect);
             }
         }
     }

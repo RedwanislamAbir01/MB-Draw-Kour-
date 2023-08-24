@@ -17,6 +17,7 @@ namespace _Game
         private GameObject parentObj;
 
         [SerializeField] private ParticleSystem _hitImpact;
+        [SerializeField] private Transform _hitImpactSpawnPoint;
         
         void Start()
         {
@@ -94,6 +95,9 @@ namespace _Game
             transform.DOLocalRotate(new Vector3(0, 0, 0), .1f).SetDelay(.2f);
         }
 
-        public void PlayHitImpact() => _hitImpact.Play();
+        public void PlayHitImpact()
+        {
+            Instantiate(_hitImpact, _hitImpactSpawnPoint.position, Quaternion.identity);
+        }
     }
 }

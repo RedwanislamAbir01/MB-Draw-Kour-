@@ -21,7 +21,7 @@ namespace _Game
             _playerHandle.SetActive(false);
         }
 
-        public void ZipLine(Transform startPoint, Transform endPoint, Transform dropPoint, float jumpDuration, float zipDuration, GameObject startHandle, GameObject endHandle)
+        public void ZipLine(Transform startPoint, Transform endPoint, Transform dropPoint, float jumpDuration, float zipDuration, GameObject startHandle, GameObject endHandle, ParticleSystem landEffect)
         {
             _lineFollower.ClearLine();
             _animator.SetTrigger(_Ziplining);
@@ -45,6 +45,7 @@ namespace _Game
                     
                     transform.DOMove(dropPoint.position, jumpDuration).OnComplete(() =>
                     {
+                        landEffect.Play();
                         PlayerState.Instance.SetState(PlayerState.State.Default);
                         CamManager.Instance.EnableStartCam();
                         CamManager.Instance.ResetFollowCamTrackedObjectOffset();
