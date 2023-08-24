@@ -5,14 +5,18 @@ namespace _Game
 {
     public class PlayerSlide : MonoBehaviour
     {
-        [Header("References")]
-        [SerializeField] private LineFollower _lineFollower;
+        [Header("References")] [SerializeField]
+        private LineFollower _lineFollower;
+
         [SerializeField] private Animator _animator;
         [SerializeField] private Transform _visual;
 
-        [Header("Slide Settings")]
-        [SerializeField] private float _detectionRange = 2f;
+        [Header("Slide Settings")] [SerializeField]
+        private float _detectionRange = 2f;
+
         [SerializeField] private LayerMask _obstacleLayer;
+
+        [SerializeField] private ParticleSystem[] _dustTrails;
 
         private bool _isSliding;
 
@@ -65,70 +69,88 @@ namespace _Game
             }
         }
 
-            private bool CheckIfPointBetweenObjects(Transform objectA, Transform objectB, Vector3 point)
+        private bool CheckIfPointBetweenObjects(Transform objectA, Transform objectB, Vector3 point)
+        {
+            var directionVector = objectB.position - objectA.position;
+            var vectorToObjectA = point - objectA.position;
+            var vectorToObjectB = point - objectB.position;
+
+            var dotProductA = Vector3.Dot(directionVector, vectorToObjectA);
+            var dotProductB = Vector3.Dot(directionVector, vectorToObjectB);
+
+            if (dotProductA > 0 && dotProductB < 0)
             {
-                var directionVector = objectB.position - objectA.position;
-                var vectorToObjectA = point - objectA.position;
-                var vectorToObjectB = point - objectB.position;
+                // Debug.Log("Point is between the objects.");
+                return true;
+            }
 
-                var dotProductA = Vector3.Dot(directionVector, vectorToObjectA);
-                var dotProductB = Vector3.Dot(directionVector, vectorToObjectB);
+            // Debug.Log("Point is NOT between the objects.");
+            return false;
+        }
 
-                if (dotProductA > 0 && dotProductB < 0)
+
+        private bool CanStartSlide()
+        {
+            // Add any additional conditions to check if sliding can start
+            return true; // For example, you might want to check if the player is grounded.
+        }
+
+        private void InitiateSlide()
+        {
+            _isSliding = true;
+
+            PlayerState.Instance.SetState(PlayerState.State.Parkour);
+
+            ToggleDustTrails(true);
+            
+            _animator.SetTrigger(_Slide);
+
+            SlideVisualEffect();
+        }
+
+        private void SlideVisualEffect()
+        {
+            const float slideDuration = 0.1f;
+            const float slideDownDistance = -0.8f;
+            const float slideUpDelay = .8f;
+            const float slideUpDuration = 0.3f;
+
+            _visual.DOLocalMoveY(slideDownDistance, slideDuration)
+                .OnComplete(() =>
                 {
-                    // Debug.Log("Point is between the objects.");
-                    return true;
-                }
+                    PlayerState.Instance.SetState(PlayerState.State.Default);
+                    _visual.DOLocalMoveY(0f, slideUpDuration).SetDelay(slideUpDelay)
+                        .OnComplete(CompleteSlide);
+                });
+        }
 
-                // Debug.Log("Point is NOT between the objects.");
-                return false;
-            }
+        private void CompleteSlide()
+        {
+            _isSliding = false;
 
-
-            private bool CanStartSlide()
-            {
-                // Add any additional conditions to check if sliding can start
-                return true; // For example, you might want to check if the player is grounded.
-            }
-
-            private void InitiateSlide()
-            {
-                _isSliding = true;
-
-                PlayerState.Instance.SetState(PlayerState.State.Parkour);
-
-                _animator.SetTrigger(_Slide);
-
-                SlideVisualEffect();
-            }
-
-            private void SlideVisualEffect()
-            {
-                const float slideDuration = 0.1f;
-                const float slideDownDistance = -0.8f;
-                const float slideUpDelay = .8f;
-                const float slideUpDuration = 0.3f;
-
-                _visual.DOLocalMoveY(slideDownDistance, slideDuration)
-                    .OnComplete(() =>
-                    {
-                        PlayerState.Instance.SetState(PlayerState.State.Default);
-                        _visual.DOLocalMoveY(0f, slideUpDuration).SetDelay(slideUpDelay)
-                            .OnComplete(CompleteSlide);
-                    });
-            }
-
-            private void CompleteSlide()
-            {
-                _isSliding = false;
-
-              
+            ToggleDustTrails(false);
 
             if (_lineFollower.IsWayPointAvailable())
             {
                 _animator.SetTrigger(_Run);
             }
         }
+        
+        private void ToggleDustTrails(bool enable)
+        {
+            switch (enable)
+            {
+                case true:
+                    foreach (var dustTrail in _dustTrails) dustTrail.Play();
+
+                    break;
+
+                case false:
+                    foreach (var dustTrail in _dustTrails) dustTrail.Stop();
+
+                    break;
+            }
         }
     }
+}
 
