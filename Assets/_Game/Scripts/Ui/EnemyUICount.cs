@@ -51,7 +51,7 @@ namespace _Game
         }
         IEnumerator CountDealyRoutine()
         {
-           yield return new WaitForSeconds(2.5f);
+           yield return new WaitForSeconds(2f);
            HandleEnemyDeath();
         }
         private void HandleEnemyDeath()

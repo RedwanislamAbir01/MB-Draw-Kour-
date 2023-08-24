@@ -37,6 +37,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
     private void Start()
     {
+       
         DetectorCone.SetActive(true);
         currentHealth = maxHealth;
         enemyCollider = GetComponent<Collider>();
@@ -50,9 +51,14 @@ public class Enemy : MonoBehaviour, IDamageable
             StartCoroutine(PatrolRoutine());
 
         }
+
+        PlayerHealth.OnDeath += StopPatrolMechanics;
     }
 
-
+    private void OnDestroy()
+    {
+        PlayerHealth.OnDeath -= StopPatrolMechanics;
+    }
     public void TakeDamage(int damageAmount)
     {
         if (currentHealth > 0)
@@ -89,7 +95,13 @@ public class Enemy : MonoBehaviour, IDamageable
     
     private void StopPatrolMechanics()
     {
-        DOTween.Kill(transform);
+        DOTween.Kill(transform.rotation);
+        StopAllCoroutines(); // Stop the patrol routine
+        DetectorCone.SetActive(false);
+    }
+    private void StopPatrolMechanics(object sender, EventArgs e)
+    {
+        DOTween.Kill(transform.rotation);
         StopAllCoroutines(); // Stop the patrol routine
         DetectorCone.SetActive(false);
     }

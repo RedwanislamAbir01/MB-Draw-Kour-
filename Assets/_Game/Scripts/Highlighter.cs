@@ -24,6 +24,7 @@ namespace _Game
             }
 
             // Subscribe to events
+            PlayerHealth.OnDeath += DisableObj;
             GameManager.Instance.OnEolTrigger += DisableObj;
             // Enemy.OnDeathResetCam += OnCharacterReachDestinationHandler;
             LineFollower.OnCharacterStartMoving += OnCharacterStartMovingHandler;
@@ -35,6 +36,7 @@ namespace _Game
 
         private void OnDisable()
         {
+            PlayerHealth.OnDeath -= DisableObj;
             CamManager.OnCamReseting -= OnCharacterReachDestinationHandler;
             LineFollower.OnCharacterReachedEnemy -= DisableObject;
             GameManager.Instance.OnEolTrigger -= DisableObj;
@@ -60,6 +62,7 @@ namespace _Game
                 firstChild.gameObject.SetActive(false);
             }
         }
+        void DisableObj(object sender, EventArgs e) => gameObject.SetActive(false); 
         void DisableObj() => gameObject.SetActive(false);
         private void OnCharacterReachDestinationHandler()
         {
