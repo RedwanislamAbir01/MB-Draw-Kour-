@@ -3,6 +3,7 @@ using TMPro;
 
 using System;
 using System.Collections;
+using _Game.Managers;
 
 namespace _Game
 {
@@ -17,6 +18,8 @@ namespace _Game
 
         private void Start()
         {
+            GameManager.Instance.OnLevelFail += DisableObj;
+
             // Find all Enemy objects in the scene
             Enemy[] enemies = FindObjectsOfType<Enemy>();
             totalEnemies = enemies.Length;
@@ -34,6 +37,7 @@ namespace _Game
         private void OnDestroy()
         {
             // Unsubscribe from the OnDeath event of all enemies
+            GameManager.Instance.OnLevelFail -= DisableObj;
             Enemy[] enemies = FindObjectsOfType<Enemy>();
             foreach (Enemy enemy in enemies)
             {
@@ -64,5 +68,7 @@ namespace _Game
         {
             _enemyCount.text = $"{enemiesKilled}/{totalEnemies}";
         }
+
+        void DisableObj(float a ) => gameObject.SetActive(false);
     }
 }
