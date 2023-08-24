@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 
 using System;
+using System.Collections;
 
 namespace _Game
 {
@@ -26,7 +27,7 @@ namespace _Game
             // Subscribe to the OnDeath event of all enemies
             foreach (Enemy enemy in enemies)
             {
-                enemy.OnDeath += HandleEnemyDeath;
+                enemy.OnDeath += DelayCount;
             }
         }
 
@@ -36,10 +37,19 @@ namespace _Game
             Enemy[] enemies = FindObjectsOfType<Enemy>();
             foreach (Enemy enemy in enemies)
             {
-                enemy.OnDeath -= HandleEnemyDeath;
+                enemy.OnDeath -= DelayCount;
             }
         }
 
+        void DelayCount()
+        {
+            StartCoroutine(CountDealyRoutine());
+        }
+        IEnumerator CountDealyRoutine()
+        {
+           yield return new WaitForSeconds(2.5f);
+           HandleEnemyDeath();
+        }
         private void HandleEnemyDeath()
         {
             enemiesKilled++;
