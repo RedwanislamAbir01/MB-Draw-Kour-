@@ -15,6 +15,9 @@ namespace _Game
         private Enemy currentEnemy;
 
         private GameObject parentObj;
+
+        [SerializeField] private ParticleSystem _hitImpact;
+        
         void Start()
         {
          parentObj = transform.parent.gameObject;
@@ -90,5 +93,7 @@ namespace _Game
 
             transform.DOLocalRotate(new Vector3(0, 0, 0), .1f).SetDelay(.2f);
         }
+
+        public void PlayHitImpact() => _hitImpact.Play();
     }
 }

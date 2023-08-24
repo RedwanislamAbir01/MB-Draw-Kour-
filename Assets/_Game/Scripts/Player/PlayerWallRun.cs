@@ -49,8 +49,13 @@ namespace _Game
             PlayerState.Instance.SetState(PlayerState.State.Parkour);
             
             transform.forward = direction;
-            _initialPosition = transform.position;
             _targetPosition = targetPosition;
+            
+            var startPosition = transform.position;
+            startPosition.x = _targetPosition.x;
+            transform.position = startPosition;
+            
+            _initialPosition = transform.position;
 
             _animator.ResetTrigger(_WallRunStop);
             _animator.SetTrigger(_WallRunStart);
