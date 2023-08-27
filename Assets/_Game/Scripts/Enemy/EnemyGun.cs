@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,16 +27,17 @@ namespace _Game
         {
             _muzzlleFlash.SetActive(true);
             GameObject bullet = Instantiate(_bullet, _shootPoint.position, _shootPoint.rotation);
-
+            bullet.transform.DOMove(new Vector3(FindAnyObjectByType<LineFollower>().transform.position.x , 
+            bullet.transform.position.y , FindAnyObjectByType<LineFollower>().transform.position.z), .3f);
             // Get the bullet's Rigidbody component
-            Rigidbody bulletRigidbody = bullet.AddComponent<Rigidbody>();
+          //  Rigidbody bulletRigidbody = bullet.AddComponent<Rigidbody>();
 
             // Check if the bullet has a Rigidbody
-            if (bulletRigidbody != null)
-            {
+          //  if (bulletRigidbody != null)
+           // {
                 // Add an impulse force to the bullet in the forward direction
-                bulletRigidbody.AddForce(_shootPoint.forward * 10 , ForceMode.Impulse);
-            }
+               // bulletRigidbody.AddForce(_shootPoint.forward * 10 , ForceMode.Impulse);
+          //  }
         }
       
     }

@@ -2,6 +2,8 @@ using UnityEngine;
 using TMPro;
 
 using System;
+using System.Collections;
+using _Game.Managers;
 
 namespace _Game
 {
@@ -16,6 +18,8 @@ namespace _Game
 
         private void Start()
         {
+            GameManager.Instance.OnLevelFail += DisableObj;
+
             // Find all Enemy objects in the scene
             Enemy[] enemies = FindObjectsOfType<Enemy>();
             totalEnemies = enemies.Length;
@@ -26,20 +30,30 @@ namespace _Game
             // Subscribe to the OnDeath event of all enemies
             foreach (Enemy enemy in enemies)
             {
-                enemy.OnDeath += HandleEnemyDeath;
+                enemy.OnDeath += DelayCount;
             }
         }
 
         private void OnDestroy()
         {
             // Unsubscribe from the OnDeath event of all enemies
+            GameManager.Instance.OnLevelFail -= DisableObj;
             Enemy[] enemies = FindObjectsOfType<Enemy>();
             foreach (Enemy enemy in enemies)
             {
-                enemy.OnDeath -= HandleEnemyDeath;
+                enemy.OnDeath -= DelayCount;
             }
         }
 
+        void DelayCount()
+        {
+            StartCoroutine(CountDealyRoutine());
+        }
+        IEnumerator CountDealyRoutine()
+        {
+           yield return new WaitForSeconds(2f);
+           HandleEnemyDeath();
+        }
         private void HandleEnemyDeath()
         {
             enemiesKilled++;
@@ -54,5 +68,7 @@ namespace _Game
         {
             _enemyCount.text = $"{enemiesKilled}/{totalEnemies}";
         }
+
+        void DisableObj(float a ) => gameObject.SetActive(false);
     }
 }
