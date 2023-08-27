@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60b7ce306f13a39458f89acf0c34d4fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _visulas: {fileID: 4067640621435210555}
+  _visulas: {fileID: 6090293080137938431}
 --- !u!135 &7081767135768466583
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -792,6 +792,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 491ebe3fb4139c142837128424f038ab, type: 3}
+--- !u!1 &6090293080137938431 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 491ebe3fb4139c142837128424f038ab,
+    type: 3}
+  m_PrefabInstance: {fileID: 6360341168112863406}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6903668470128602949 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 491ebe3fb4139c142837128424f038ab,
