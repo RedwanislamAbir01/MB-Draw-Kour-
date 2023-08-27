@@ -45,7 +45,7 @@ namespace _Game
             });
         }
 
-        private void GoForward()
+        private void GoForward(float obj)
         {
             Invoke("CloseDoor", .1f);
             float forwardDistance = -1000.0f; // You can adjust this distance as needed

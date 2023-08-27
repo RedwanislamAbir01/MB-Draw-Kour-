@@ -1,5 +1,4 @@
 using System;
-using _Tools.Extensions;
 using _Tools.Helpers;
 using UnityEngine;
 
@@ -10,7 +9,7 @@ namespace _Game.Managers
         #region Events
 
         public event Action OnLevelStart;
-        public event Action OnLevelComplete;
+        public event Action<float> OnLevelComplete;
         public event Action<float> OnLevelFail;
         public event Action OnEolTrigger;
         #endregion
@@ -28,7 +27,7 @@ namespace _Game.Managers
 
         public void LevelComplete()
         {
-            OnLevelComplete?.Invoke();
+            OnLevelComplete?.Invoke(_levelEndUIDelay);
             
             //var nextSceneIndex = LevelManager.Instance.GetNextSceneIndex();
             //if (UIManager.Instance.IsNotNull(nameof(UIManager)))

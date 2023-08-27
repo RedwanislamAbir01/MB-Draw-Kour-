@@ -95,7 +95,7 @@ namespace _Game
             followCam.Priority = followCamPriority;
         }
 
-        void StopCamFollow()
+        void StopCamFollow(float obj)
         {
           //endCam.Follow = null;
           
