@@ -51,8 +51,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.3132453, y: 0.1, z: 7}
-  m_Center: {x: -0.0073052943, y: 0, z: 0}
+  m_Size: {x: 1.2, y: 0.25, z: 7}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5359777960809752535
 GameObject:
   m_ObjectHideFlags: 0
@@ -170,7 +170,7 @@ Transform:
   - {fileID: 6660494884448022897}
   - {fileID: 1273016459454241177}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &8117551030187920268
 BoxCollider:
@@ -191,7 +191,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 0.4, z: 7}
+  m_Size: {x: 1.2, y: 0.4, z: 7}
   m_Center: {x: 0, y: 0.1, z: 0}
 --- !u!114 &7615643754412659852
 MonoBehaviour:
@@ -221,17 +221,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: cfdcc583e95b89542bb30b0ea361fc09,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 2.8827
+      value: 2.9000003
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cfdcc583e95b89542bb30b0ea361fc09,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.8827
+      value: 2.9000003
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cfdcc583e95b89542bb30b0ea361fc09,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 3.8976986
+      value: 2.9000003
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cfdcc583e95b89542bb30b0ea361fc09,
         type: 3}
@@ -282,6 +282,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cfdcc583e95b89542bb30b0ea361fc09,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cfdcc583e95b89542bb30b0ea361fc09,
         type: 3}
