@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,6 +8,8 @@ namespace _Game
 {
     public class EnemyGun : MonoBehaviour
     {
+        public static event EventHandler OnGunShoot;
+        
         [SerializeField] private GameObject _bullet;
         [SerializeField] private GameObject _muzzlleFlash;
         [SerializeField] private Transform _shootPoint ;
@@ -29,6 +32,8 @@ namespace _Game
             GameObject bullet = Instantiate(_bullet, _shootPoint.position, _shootPoint.rotation);
             bullet.transform.DOMove(new Vector3(FindAnyObjectByType<LineFollower>().transform.position.x , 
             bullet.transform.position.y , FindAnyObjectByType<LineFollower>().transform.position.z), .3f);
+            
+            OnGunShoot?.Invoke(this, EventArgs.Empty);
             // Get the bullet's Rigidbody component
           //  Rigidbody bulletRigidbody = bullet.AddComponent<Rigidbody>();
 

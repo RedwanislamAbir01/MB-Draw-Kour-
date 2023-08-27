@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
 
@@ -5,6 +6,8 @@ namespace _Game
 {
     public class PlayerSlide : MonoBehaviour
     {
+        public static event EventHandler OnSlide;
+        
         [Header("References")] [SerializeField]
         private LineFollower _lineFollower;
 
@@ -102,6 +105,7 @@ namespace _Game
             PlayerState.Instance.SetState(PlayerState.State.Parkour);
 
             ToggleDustTrails(true);
+            OnSlide?.Invoke(this, EventArgs.Empty);
             
             _animator.SetTrigger(_Slide);
 
