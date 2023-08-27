@@ -105,7 +105,7 @@ MonoBehaviour:
   _endPoint: {fileID: 6470003393421909449}
   _dropPoint: {fileID: 4571641029697526014}
   _jumpDuration: 0.5
-  _zipDuration: 1.5
+  _zipDuration: 1
   _startHandle: {fileID: 3429269824280687268}
   _endHandle: {fileID: 6385528554085730696}
   _landEffect: {fileID: 1176420631340635113}
