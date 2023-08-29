@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: cbfe55a9ba1970448a0854dbee630ead, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.989954, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -132,7 +132,7 @@ Transform:
   - {fileID: 381064931701515826}
   - {fileID: 65693113952795108}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7251931261303096429
 MeshFilter:
@@ -892,7 +892,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hitImpact: {fileID: 2677427411474598047, guid: 5befacfe3ed6fd4468dc003521f1de75,
     type: 3}
-  _hitImpactSpawnPoint: {fileID: 8388970778002721941}
+  _hitImpactSpawnPointRigthFoot: {fileID: 0}
+  _hitImpactSpawnPointLeftFoot: {fileID: 0}
+  _hitImpactSpawnPoinHand: {fileID: 0}
 --- !u!4 &6600193186255240662 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 16c4bc07f5558b84b9702533248f7a0e,

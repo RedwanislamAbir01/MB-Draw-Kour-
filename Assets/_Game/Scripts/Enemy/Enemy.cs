@@ -37,6 +37,9 @@ public class Enemy : MonoBehaviour, IDamageable
     private bool isMoving = false;
     public string punchTriggerName;
 
+    private bool isPatrolling = false;
+    private Tweener patrolMoveTween;
+    private Tweener patrolRotateTween;
     private void Start()
     {
        
@@ -55,10 +58,12 @@ public class Enemy : MonoBehaviour, IDamageable
         }
 
         PlayerHealth.OnDeath += StopPatrolMechanics;
+        LineFollower.OnCharacterReachedEnemy += StopPatrolMechanics;
     }
 
     private void OnDestroy()
     {
+        LineFollower.OnCharacterReachedEnemy -= StopPatrolMechanics;
         PlayerHealth.OnDeath -= StopPatrolMechanics;
     }
     public void TakeDamage(int damageAmount, string punchTriggerName)
@@ -98,14 +103,23 @@ public class Enemy : MonoBehaviour, IDamageable
     
     private void StopPatrolMechanics()
     {
-        DOTween.Kill(transform.rotation);
-        StopAllCoroutines(); // Stop the patrol routine
+        isPatrolling = false;
+        patrolMoveTween?.Kill();
+        patrolRotateTween?.Kill();
+        DetectorCone.SetActive(false);
+    }
+    private void StopPatrolMechanics(Enemy enemy)
+    {
+        isPatrolling = false;
+        patrolMoveTween?.Kill();
+        patrolRotateTween?.Kill();
         DetectorCone.SetActive(false);
     }
     private void StopPatrolMechanics(object sender, EventArgs e)
     {
-        DOTween.Kill(transform.rotation);
-        StopAllCoroutines(); // Stop the patrol routine
+        isPatrolling = false;
+        patrolMoveTween?.Kill();
+        patrolRotateTween?.Kill();
         DetectorCone.SetActive(false);
     }
 
@@ -141,7 +155,7 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         while (true) // Infinite loop to keep patrolling
         {
-            if (!isMoving)
+            if (!isMoving )
             {
                 isMoving = true;
                
@@ -157,19 +171,19 @@ public class Enemy : MonoBehaviour, IDamageable
                 Quaternion targetRotation = Quaternion.LookRotation(directionToWaypoint);
 
                 // Rotate the enemy towards the target waypoint
-                transform.DORotateQuaternion(targetRotation, 1.0f)
-                    .SetEase(Ease.Linear)
+                patrolRotateTween = transform.DORotateQuaternion(targetRotation, 1.0f)
+    .SetEase(Ease.Linear)
                     .OnComplete(() =>
                     {
                         OnStartMoving?.Invoke();
                         // Move towards the waypoint
-                        transform.DOMove(patrolWaypoints[nextWaypointIndex].position, Vector3.Distance(transform.position, patrolWaypoints[nextWaypointIndex].position))
-                            .SetEase(Ease.Linear)
-                            .OnComplete(() =>
-                            {
-                                OnStopMoving?.Invoke();
-                                StartCoroutine(WaitAtWaypoint(nextWaypointIndex));
-                            });
+                        patrolMoveTween = transform.DOMove(patrolWaypoints[nextWaypointIndex].position, Vector3.Distance(transform.position, patrolWaypoints[nextWaypointIndex].position))
+                 .SetEase(Ease.Linear)
+                 .OnComplete(() =>
+                 {
+                     OnStopMoving?.Invoke();
+                     StartCoroutine(WaitAtWaypoint(nextWaypointIndex));
+                 });
 
                         // Update the current waypoint index
                         currentWaypointIndex = nextWaypointIndex;
