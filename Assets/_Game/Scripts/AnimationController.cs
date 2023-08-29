@@ -57,20 +57,30 @@ namespace _Game
         {
             animator.applyRootMotion = true;
             currentEnemy = enemy;
-            animator.SetTrigger("Punch");
-            AnimationPunchEventCallback(currentEnemy);
+
+            // Generate a random number between 0 and 2 (inclusive)
+            int randomPunchIndex = UnityEngine.Random.Range(0, 3);
+
+            // Construct the trigger parameter name based on the random index
+            string punchTriggerName = (randomPunchIndex == 0) ? "Punch" : ("Punch" + randomPunchIndex);
+            currentEnemy.punchTriggerName = punchTriggerName;
+            // Set the trigger to play the randomly selected punch animation
+            animator.SetTrigger(punchTriggerName);
+
+            AnimationPunchEventCallback(currentEnemy, punchTriggerName);
             StartCoroutine(ResetRootMotionRoutine());
         }
+   
         private IEnumerator ResetRootMotionRoutine()
         {  
             yield return new WaitForSeconds(1.5f);
         }
-        public void AnimationPunchEventCallback(Enemy enemy)
+        public void AnimationPunchEventCallback(Enemy enemy, string punchTriggerName)
         {
             if (currentEnemy != null)
             {
-                int damageAmount = 100; 
-                currentEnemy.TakeDamage(damageAmount);
+                int damageAmount = 100;
+                currentEnemy.TakeDamage(damageAmount, punchTriggerName);
             }
         }
 

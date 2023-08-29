@@ -6,7 +6,7 @@ using UnityEngine;
 
 public interface IDamageable
 {
-    void TakeDamage(int damageAmount);
+    void TakeDamage(int damageAmount, string punchTriggerName);
 }
 public enum EnemyType
 {
@@ -24,7 +24,8 @@ public class Enemy : MonoBehaviour, IDamageable
     public GameObject DetectorCone;
     public EnemyType enemyType;
     public event Action OnDeath;
-    public event Action OnHit;
+    public event Action<string> OnHit;
+
 
     public static event Action OnDeathResetCam;
 
@@ -34,6 +35,7 @@ public class Enemy : MonoBehaviour, IDamageable
     public float waypointWaitTime = 2.0f;
     private int currentWaypointIndex = 0;
     private bool isMoving = false;
+    public string punchTriggerName;
 
     private void Start()
     {
@@ -59,13 +61,13 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         PlayerHealth.OnDeath -= StopPatrolMechanics;
     }
-    public void TakeDamage(int damageAmount)
+    public void TakeDamage(int damageAmount, string punchTriggerName)
     {
         if (currentHealth > 0)
         {
             StopPatrolMechanics();
             currentHealth -= damageAmount;
-            OnHit?.Invoke();
+            OnHit?.Invoke(punchTriggerName); // Pass the punch trigger name
             Debug.Log($"Enemy took {damageAmount} damage. Current health: {currentHealth}");
 
             if (currentHealth <= 0)
@@ -74,6 +76,7 @@ public class Enemy : MonoBehaviour, IDamageable
             }
         }
     }
+
 
     private void Die()
     {

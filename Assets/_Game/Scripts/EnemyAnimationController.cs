@@ -48,18 +48,45 @@ namespace _Game
             _playerDetector.OnPlayerDetected -= ShootAnim;
         }
 
-        private void PlayPlayerHitAnimation()
+        private void PlayPlayerHitAnimation(string punchTriggerName)
         {
-            _animator.SetTrigger("Hit");
+            if (punchTriggerName == "Punch")
+            {
+                _animator.SetTrigger("Hit");
+            }
+            else if (punchTriggerName == "Punch1")
+            {
+                _animator.SetTrigger("Hit1");
+            }
+            else if (punchTriggerName == "Punch2")
+            {
+                _animator.SetTrigger("Hit2");
+            }
+            // Add more conditions for other punch trigger names as needed
         }
+
 
         private void DeathAnim()
         {
             _animator.applyRootMotion = true;
-            _animator.SetTrigger("Hit");
-          //  _animator.SetTrigger("Die");
+
+            if (_enemy.punchTriggerName == "Punch")
+            {
+                _animator.SetTrigger("Die");
+            }
+            else if (_enemy.punchTriggerName == "Punch1")
+            {
+                _animator.SetTrigger("Die1");
+            }
+            else if (_enemy.punchTriggerName == "Punch2")
+            {
+                _animator.SetTrigger("Die2");
+            }
+            // Add more conditions for other punch trigger names as needed
+
             OnEnemyDeath?.Invoke();
         }
+
 
         private void IdleAnim()
         {
