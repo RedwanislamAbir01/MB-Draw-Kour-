@@ -58,12 +58,12 @@ public class Enemy : MonoBehaviour, IDamageable
         }
 
         PlayerHealth.OnDeath += StopPatrolMechanics;
-        LineFollower.OnCharacterReachedEnemy += StopPatrolMechanics;
+   
     }
 
     private void OnDestroy()
     {
-        LineFollower.OnCharacterReachedEnemy -= StopPatrolMechanics;
+    
         PlayerHealth.OnDeath -= StopPatrolMechanics;
     }
     public void TakeDamage(int damageAmount, string punchTriggerName)
@@ -106,14 +106,15 @@ public class Enemy : MonoBehaviour, IDamageable
         isPatrolling = false;
         patrolMoveTween?.Kill();
         patrolRotateTween?.Kill();
-        DetectorCone.SetActive(false);
+        DetectorCone.SetActive(false); StopAllCoroutines();
     }
-    private void StopPatrolMechanics(Enemy enemy)
+    public void Stop()
     {
+       
         isPatrolling = false;
         patrolMoveTween?.Kill();
         patrolRotateTween?.Kill();
-        DetectorCone.SetActive(false);
+        DetectorCone.SetActive(false); StopAllCoroutines();
     }
     private void StopPatrolMechanics(object sender, EventArgs e)
     {
@@ -121,6 +122,7 @@ public class Enemy : MonoBehaviour, IDamageable
         patrolMoveTween?.Kill();
         patrolRotateTween?.Kill();
         DetectorCone.SetActive(false);
+        StopAllCoroutines();
     }
 
     private IEnumerator RotatingEnemyRoutine()

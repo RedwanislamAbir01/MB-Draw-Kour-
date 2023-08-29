@@ -3,6 +3,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.VisualScripting;
 
 namespace _Game
 {
@@ -18,11 +19,11 @@ namespace _Game
         {
             _controller = GetComponentInParent<EnemyAnimationController>();
             _controller.OnShoot += Shoot;
-
+            _controller.OnGotHit += DropGun;
         }
         private void OnDestroy()
         {
-           
+            _controller.OnGotHit -= DropGun;
             _controller.OnShoot -= Shoot;
         }
 
@@ -44,6 +45,13 @@ namespace _Game
                // bulletRigidbody.AddForce(_shootPoint.forward * 10 , ForceMode.Impulse);
           //  }
         }
-      
+
+        public void DropGun()
+        {
+            transform.AddComponent<MeshCollider>().convex = true;
+            transform.AddComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+            transform.parent = null;
+        }
+
     }
 }

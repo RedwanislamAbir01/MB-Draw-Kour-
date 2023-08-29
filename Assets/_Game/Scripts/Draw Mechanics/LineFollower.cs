@@ -255,6 +255,7 @@ using System.Collections;
         Enemy enemy = other.GetComponent<Enemy>();
         if (enemy != null)
         {
+            enemy.Stop();
             other.transform.LookAt(transform);
             transform.LookAt(other.transform);
             OnCharacterReachedEnemy?.Invoke(enemy); // Pass the enemy as a parameter

@@ -6,6 +6,7 @@ namespace _Game
     [RequireComponent(typeof(Animator))]  // Ensures that this component requires an Animator to function properly
     public class EnemyAnimationController : MonoBehaviour
     {
+        public event Action OnGotHit;
         public event Action OnShoot;
         public static event Action OnEnemyDeath;
 
@@ -36,7 +37,8 @@ namespace _Game
             _enemy.OnDeath += DeathAnim;
             _enemy.OnStartMoving += RunAnim;
             _enemy.OnStopMoving += IdleAnim;
-            _playerDetector.OnPlayerDetected += ShootAnim;
+            _playerDetector.OnPlayerDetected += ShootAnim; 
+
         }
 
         private void UnhookEventHandlers()
@@ -62,7 +64,8 @@ namespace _Game
             {
                 _animator.SetTrigger("Hit2");
             }
-            // Add more conditions for other punch trigger names as needed
+            if (GetComponentInChildren<EnemyGun>() != null)
+            GetComponentInChildren<EnemyGun>().DropGun();
         }
 
 
@@ -83,11 +86,16 @@ namespace _Game
                 _animator.SetTrigger("Die2");
             }
             // Add more conditions for other punch trigger names as needed
-
+           
             OnEnemyDeath?.Invoke();
+            if (GetComponentInChildren<EnemyGun>()!= null)
+            GetComponentInChildren<EnemyGun>().DropGun();
         }
 
-
+        public void GotHit()
+        {
+            OnGotHit?.Invoke();
+        }
         private void IdleAnim()
         {
             _animator.SetTrigger("Idle");
