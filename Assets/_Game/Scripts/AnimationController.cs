@@ -9,6 +9,8 @@ namespace _Game
     [DefaultExecutionOrder(100)]
     public class AnimationController : MonoBehaviour
     {
+        public static event EventHandler OnPlayerComboImpact;
+
         [Header(" Settings ")]
         private Animator animator;
 
@@ -17,8 +19,9 @@ namespace _Game
         private GameObject parentObj;
 
         [SerializeField] private ParticleSystem _hitImpact;
-        [SerializeField] private Transform _hitImpactSpawnPoint;
-        
+        [SerializeField] private Transform _hitImpactSpawnPointRigthFoot;
+        [SerializeField] private Transform _hitImpactSpawnPointLeftFoot;
+        [SerializeField] private Transform _hitImpactSpawnPoinHand;
         void Start()
         {
          parentObj = transform.parent.gameObject;
@@ -107,7 +110,18 @@ namespace _Game
 
         public void PlayHitImpact()
         {
-            Instantiate(_hitImpact, _hitImpactSpawnPoint.position, Quaternion.identity);
+            OnPlayerComboImpact?.Invoke(this, EventArgs.Empty);
+            Instantiate(_hitImpact, _hitImpactSpawnPointRigthFoot.position, Quaternion.identity);
+        }
+        public void PlayHitImpact1()
+        {
+            OnPlayerComboImpact?.Invoke(this, EventArgs.Empty);
+            Instantiate(_hitImpact, _hitImpactSpawnPointLeftFoot.position, Quaternion.identity);
+        }
+        public void PlayHitImpact2()
+        {
+            OnPlayerComboImpact?.Invoke(this, EventArgs.Empty);
+            Instantiate(_hitImpact, _hitImpactSpawnPoinHand.position, Quaternion.identity);
         }
     }
 }

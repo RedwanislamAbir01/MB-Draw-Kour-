@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using _Game.Audios;
 using _Tools.Helpers;
 using UnityEngine;
@@ -22,6 +23,8 @@ namespace _Game.Managers
             PlayerItemCollector.OnItemCollected += PlayerItemCollector_OnItemCollected;
             PlayerSlide.OnSlide += PlayerSlide_OnSlide;
             EnemyGun.OnGunShoot += EnemyGun_OnGunShoot;
+            PlayerHealth.OnDeath += Player_OnDeath;
+            AnimationController.OnPlayerComboImpact += Player_OnImpact;
         }
         
         private void OnDestroy()
@@ -29,6 +32,8 @@ namespace _Game.Managers
             PlayerItemCollector.OnItemCollected -= PlayerItemCollector_OnItemCollected;
             PlayerSlide.OnSlide -= PlayerSlide_OnSlide;
             EnemyGun.OnGunShoot -= EnemyGun_OnGunShoot;
+            PlayerHealth.OnDeath -= Player_OnDeath;
+            AnimationController.OnPlayerComboImpact -= Player_OnImpact;
         }
 
         #endregion
@@ -45,6 +50,23 @@ namespace _Game.Managers
         {
             var player = sender as PlayerSlide;
             PlaySound(_audioClipRefsSO.sliding, player.transform.position);
+        }
+        private void Player_OnImpact(object sender, EventArgs e)
+        {
+            var player = sender as AnimationController;
+            PlaySound(_audioClipRefsSO.combatHit, player.transform.position);
+        }
+        private void Player_OnDeath(object sender, EventArgs e)
+        {
+            StartCoroutine(DelayFallRoutine(sender));
+        }
+
+        IEnumerator DelayFallRoutine(object sender)
+        {
+            yield return new WaitForSeconds(.1f);
+    
+            var player = sender as PlayerHealth;
+            PlaySound(_audioClipRefsSO.fallDown, player.transform.position);
         }
 
         private void EnemyGun_OnGunShoot(object sender, EventArgs e)

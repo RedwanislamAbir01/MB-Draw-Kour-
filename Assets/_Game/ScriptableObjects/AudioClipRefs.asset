@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AudioClipRefs
   m_EditorClassIdentifier: 
   cashCollection: {fileID: 8300000, guid: 8f6045b938c73394aa29b619138c6881, type: 3}
-  helicopterRotor: {fileID: 8300000, guid: 4c12efae3d7546c48b5c20fd82a94bef, type: 3}
   sliding: {fileID: 8300000, guid: f3a84266d8501df4382a190883a9eb04, type: 3}
-  zipLining: {fileID: 8300000, guid: 71655ae4e89f0ca47bc4881a23c43f55, type: 3}
   shooting: {fileID: 8300000, guid: b9eafe27a23084e4ca45e4f59bc7ded9, type: 3}
+  combatHit: {fileID: 8300000, guid: ce1e8abeaf25e2d4eb03136f1ed639d7, type: 3}
+  fallDown: {fileID: 8300000, guid: f24830a5ac2f63948a0656545e3f6105, type: 3}

@@ -10,7 +10,8 @@ namespace _Game.Audios
         public AudioClip cashCollection;
         public AudioClip sliding;
         public AudioClip shooting;
-
+        public AudioClip combatHit;
+        public AudioClip fallDown;
         #endregion
     }
 }
