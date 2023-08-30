@@ -39,7 +39,7 @@ namespace _Game
             EnableChopper();
 
             DOVirtual.DelayedCall(0.0f, () => {
-                transform.DOLocalMove(_chopperStationPoint.transform.position, 1f).OnComplete(() => {
+                transform.DOLocalMove(_chopperStationPoint.transform.localPosition , 1f).OnComplete(() => {
                     OnChopperReachedDestination?.Invoke();
                 });
             });

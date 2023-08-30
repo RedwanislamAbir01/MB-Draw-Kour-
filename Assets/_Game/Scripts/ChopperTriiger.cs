@@ -14,5 +14,12 @@ namespace _Game
                 OnChopperTrigger?.Invoke();
             }
         }
+        private void OnTriggerStay(Collider other)
+        {
+            if (other.gameObject.CompareTag("Player"))
+            {
+                OnChopperTrigger?.Invoke();
+            }
+        }
     }
 }

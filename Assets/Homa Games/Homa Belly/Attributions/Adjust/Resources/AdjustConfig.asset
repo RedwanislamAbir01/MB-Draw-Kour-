@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: AdjustConfig
   m_EditorClassIdentifier: 
   m_IosConfig:
-    m_appToken: 
+    m_appToken: adjust_temp_app_id
   m_AndroidConfig:
-    m_appToken: 
+    m_appToken: l2g7qsemanls
   m_isReferralSystemEnabled: 0
   m_referralSchema: 
   m_referralHost: 

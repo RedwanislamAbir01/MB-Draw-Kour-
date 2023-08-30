@@ -19,7 +19,7 @@ namespace _Game
         private void Start()
         {
             GameManager.Instance.OnLevelFail += DisableObj;
-
+            GameManager.Instance.OnLevelComplete += DisableObj;
             // Find all Enemy objects in the scene
             Enemy[] enemies = FindObjectsOfType<Enemy>();
             totalEnemies = enemies.Length;
