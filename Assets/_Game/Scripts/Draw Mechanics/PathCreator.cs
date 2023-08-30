@@ -6,6 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(LineRenderer))]
 public class path : MonoBehaviour
 {
+    [SerializeField] private GameObject _drawingSpritePrefab;
     [SerializeField] private LineFollower _playerLineFollower;
     [SerializeField] private float _lineYOffset;
     [SerializeField] private bool _canDrawLine;
@@ -14,6 +15,7 @@ public class path : MonoBehaviour
 
     private LineRenderer _lineRenderer;
     private List<Vector3> _pointsList;
+    private GameObject _currentDrawingSprite;
 
     private void Awake()
     {
@@ -44,10 +46,12 @@ public class path : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
+            _currentDrawingSprite = Instantiate(_drawingSpritePrefab, transform.position,  _drawingSpritePrefab.transform.rotation);
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, _playerLayer))
             {
                 if (hit.transform.CompareTag("Player"))
                 {
+                   
                     Time.timeScale = 0.0f;
                     _canDrawLine = true;
                     _lineRenderer.enabled = true;
@@ -60,16 +64,18 @@ public class path : MonoBehaviour
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, _targetDrawingLayer))
             {
                 const float pointGapThreshold = 0.5f;
-                
+              
                 if (DistanceToLastPoint(hit.point) > pointGapThreshold)
                 {
+                 
                     // var adjustedPoint = new Vector3(hit.point.x, 0.025f, hit.point.z);
                     var adjustedPoint = new Vector3(hit.point.x, hit.point.y + _lineYOffset, hit.point.z);
                     _pointsList.Add(adjustedPoint);
 
                     _lineRenderer.positionCount = _pointsList.Count;
                     _lineRenderer.SetPositions(_pointsList.ToArray());
-                    
+
+                    _currentDrawingSprite.transform.position = adjustedPoint;
                     // LOL
                     LineSmoother.SmoothLine(_pointsList.ToArray(), 0.1f); // Not sure what this function does 
                 }
@@ -77,6 +83,8 @@ public class path : MonoBehaviour
         }
         else
         {
+            Destroy(_currentDrawingSprite);
+            _currentDrawingSprite = null;
             CompletePathCreation();
         }
     }
@@ -90,7 +98,7 @@ public class path : MonoBehaviour
     {
         // Notify listeners about the new path
         OnNewPathCreated(_pointsList);
-
+        _currentDrawingSprite = null; Destroy(_currentDrawingSprite);
         // Enable or disable the behavior based on lineRenderer's state
         _playerLineFollower.enabled = _lineRenderer.enabled;
 

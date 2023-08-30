@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/_Game/Scenes/Splash.unity
     guid: f0a954b70de610e409fd1e885dae452d
   - enabled: 1
-    path: Assets/_Game/Scenes/Mock.unity
-    guid: 7f36d9c7e28b2ff48acd2bfbbdad5be7
+    path: Assets/_Game/Scenes/Level_1.unity
+    guid: b23badfea41e79343aa4b5cc5961caef
+  - enabled: 1
+    path: Assets/_Game/Scenes/Level_2.unity
+    guid: fb758c1c579aae54b9dbf54d8870db68
   m_configObjects: {}
