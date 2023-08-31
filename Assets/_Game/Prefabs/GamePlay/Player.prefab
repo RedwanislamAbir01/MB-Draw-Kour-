@@ -132,7 +132,7 @@ Transform:
   - {fileID: 381064931701515826}
   - {fileID: 65693113952795108}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7251931261303096429
 MeshFilter:
@@ -407,7 +407,7 @@ MonoBehaviour:
   _lineFollower: {fileID: 278276850528706647}
   _yOffset1: 1.2
   _yOffset2: 4.4
-  _zOffset: 1.8
+  _zOffset: 1
   _jumpDuration1: 0.7
   _jumpDuration2: 0.3
   _jumpDelay1: 0.5
@@ -860,6 +860,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6634402338395068989}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &445369352492781566 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6502182839619065283, guid: 16c4bc07f5558b84b9702533248f7a0e,
+    type: 3}
+  m_PrefabInstance: {fileID: 6634402338395068989}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &970724109854943148 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 16c4bc07f5558b84b9702533248f7a0e,
@@ -892,9 +898,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hitImpact: {fileID: 2677427411474598047, guid: 5befacfe3ed6fd4468dc003521f1de75,
     type: 3}
-  _hitImpactSpawnPointRigthFoot: {fileID: 0}
-  _hitImpactSpawnPointLeftFoot: {fileID: 0}
-  _hitImpactSpawnPoinHand: {fileID: 0}
+  _hitImpactSpawnPointRigthFoot: {fileID: 8388970778002721941}
+  _hitImpactSpawnPointLeftFoot: {fileID: 404968815740463763}
+  _hitImpactSpawnPoinRightHand: {fileID: 5019135396641302005}
+  _hitImpactSpawnPoinLeftHand: {fileID: 445369352492781566}
 --- !u!4 &6600193186255240662 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 16c4bc07f5558b84b9702533248f7a0e,

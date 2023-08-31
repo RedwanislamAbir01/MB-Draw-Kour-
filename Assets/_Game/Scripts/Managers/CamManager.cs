@@ -23,6 +23,7 @@ namespace _Game
         
         private int startCamPriority = 2;
         private int followCamPriority = 1;
+        private int actionCamPriority = 1;
         private float followCamInitialFov;
         private bool enemiesAreDead = false;
 
@@ -31,6 +32,7 @@ namespace _Game
             // Set initial priorities
             startCam.Priority = startCamPriority;
             followCam.Priority = followCamPriority;
+            actionCam.Priority = actionCamPriority;
 
             _followCamComposer = followCam.GetCinemachineComponent<CinemachineComposer>();
             _followCamInitialTrackedObjectOffset = _followCamComposer.m_TrackedObjectOffset;
@@ -73,7 +75,7 @@ namespace _Game
         }
         void ActionCam(Enemy enemy)
         {
-            actionCam.Priority = followCam.Priority + 1;
+            actionCam.Priority = startCamPriority + 2;
         }
         private void OnDestinationReachedCllBack()
         {
@@ -91,6 +93,7 @@ namespace _Game
             {
                 startCam.Priority = startCamPriority;
                 followCam.Priority = followCamPriority;
+                actionCam.Priority = actionCamPriority;
             }
         }
         private void OnEndOfLevelTrigger()
@@ -101,6 +104,7 @@ namespace _Game
 
         public void EnableStartCam()
         {
+            actionCam.Priority = actionCamPriority;
             startCam.Priority = startCamPriority;
             followCam.Priority = followCamPriority;
         }
