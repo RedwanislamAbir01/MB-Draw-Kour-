@@ -48,11 +48,11 @@ namespace _Game
 
         public void DropGun()
         {
-            transform.AddComponent<MeshCollider>().convex = true;
+            transform.AddComponent<BoxCollider>();
           
             transform.AddComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
             transform.parent = null;
-            transform.DORotate(new Vector3(-90, transform.eulerAngles.y, transform.eulerAngles.z), .5f);
+
         }
 
     }
