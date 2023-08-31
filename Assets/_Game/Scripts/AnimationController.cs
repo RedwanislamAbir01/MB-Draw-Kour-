@@ -1,7 +1,7 @@
 using DG.Tweening;
 using System;
 using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 namespace _Game
@@ -15,7 +15,7 @@ namespace _Game
         private Animator animator;
 
         private Enemy currentEnemy;
-
+        private string punchTriggerName;
         private GameObject parentObj;
 
         [SerializeField] private ParticleSystem _hitImpact;
@@ -65,11 +65,15 @@ namespace _Game
             int randomPunchIndex = UnityEngine.Random.Range(0, 3);
 
             // Construct the trigger parameter name based on the random index
-            string punchTriggerName = (randomPunchIndex == 0) ? "Punch" : ("Punch" + randomPunchIndex);
+            punchTriggerName = (randomPunchIndex == 0) ? "Punch" : ("Punch" + randomPunchIndex);
             currentEnemy.punchTriggerName = punchTriggerName;
             // Set the trigger to play the randomly selected punch animation
             animator.SetTrigger(punchTriggerName);
 
+
+        }
+        public void AnimPlayedCallBack()
+        {
             AnimationPunchEventCallback(currentEnemy, punchTriggerName);
             StartCoroutine(ResetRootMotionRoutine());
         }
@@ -108,17 +112,17 @@ namespace _Game
             transform.DOLocalRotate(new Vector3(0, 0, 0), .1f).SetDelay(.2f);
         }
 
-        public void PlayHitImpact()
+        public void PlayHitImpactRigthFoot()
         {
             OnPlayerComboImpact?.Invoke(this, EventArgs.Empty);
             Instantiate(_hitImpact, _hitImpactSpawnPointRigthFoot.position, Quaternion.identity);
         }
-        public void PlayHitImpact1()
+        public void PlayHitImpactLeftFoot()
         {
             OnPlayerComboImpact?.Invoke(this, EventArgs.Empty);
             Instantiate(_hitImpact, _hitImpactSpawnPointLeftFoot.position, Quaternion.identity);
         }
-        public void PlayHitImpact2()
+        public void PlayHitImpactHand()
         {
             OnPlayerComboImpact?.Invoke(this, EventArgs.Empty);
             Instantiate(_hitImpact, _hitImpactSpawnPoinHand.position, Quaternion.identity);

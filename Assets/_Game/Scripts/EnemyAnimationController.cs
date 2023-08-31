@@ -52,6 +52,7 @@ namespace _Game
 
         private void PlayPlayerHitAnimation(string punchTriggerName)
         {
+            print("on hit");
             if (punchTriggerName == "Punch")
             {
                 _animator.SetTrigger("Hit");
@@ -71,6 +72,7 @@ namespace _Game
 
         private void DeathAnim()
         {
+            print("on death");
             _animator.applyRootMotion = true;
 
             if (_enemy.punchTriggerName == "Punch")

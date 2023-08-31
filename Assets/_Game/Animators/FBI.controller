@@ -299,7 +299,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Hit
+  m_Name: Combat01
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -312,8 +312,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 1827226128182048838, guid: 3dfc906ce7d56504db1edaf9bed24fbc,
-    type: 3}
+  m_Motion: {fileID: 7400036, guid: ecf5831e0be3d644db7ffd008f8420d1, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -424,10 +423,10 @@ AnimatorStateMachine:
     m_Position: {x: 30, y: 480, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3400026677305888796}
-    m_Position: {x: 330, y: 240, z: 0}
+    m_Position: {x: 340, y: 100, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7318517635331778718}
-    m_Position: {x: 449.96408, y: 145.96057, z: 0}
+    m_Position: {x: 340, y: 60, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: -6334806710137534447}
@@ -462,8 +461,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 1827226128182048838, guid: a1c9899b90db81e46aaa47417dbc6554,
-    type: 3}
+  m_Motion: {fileID: 7400036, guid: ecf5831e0be3d644db7ffd008f8420d1, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -489,8 +487,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 1827226128182048838, guid: eeba64e92c398314b9224e80ccabe6c3,
-    type: 3}
+  m_Motion: {fileID: 7400036, guid: ecf5831e0be3d644db7ffd008f8420d1, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

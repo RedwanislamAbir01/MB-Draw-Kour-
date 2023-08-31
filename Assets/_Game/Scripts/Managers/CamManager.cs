@@ -4,6 +4,7 @@ using Cinemachine; // Make sure to import the Cinemachine namespace
 using _Game.Managers;
 using _Tools.Helpers;
 using System;
+using DG.Tweening;
 
 namespace _Game
 {
@@ -21,7 +22,7 @@ namespace _Game
         
         private int startCamPriority = 2;
         private int followCamPriority = 1;
-
+        private float followCamInitialFov;
         private bool enemiesAreDead = false;
 
         private void Start()
@@ -32,7 +33,8 @@ namespace _Game
 
             _followCamComposer = followCam.GetCinemachineComponent<CinemachineComposer>();
             _followCamInitialTrackedObjectOffset = _followCamComposer.m_TrackedObjectOffset;
-            
+            followCamInitialFov = followCam.m_Lens.FieldOfView;
+
             EnemyUICount.OnAllEnimiesDead += OnAllEnemiesDead;
             // Subscribe to the event
             LineFollower.OnCharacterStartMoving += OnCharacterStartMoving;
@@ -40,11 +42,12 @@ namespace _Game
             Enemy.OnDeathResetCam += OnDestinationReachedCllBackDelayed;
             GameManager.Instance.OnEolTrigger += OnEndOfLevelTrigger;
             GameManager.Instance.OnLevelComplete += StopCamFollow;
-
+            AnimationController.OnPlayerComboImpact += OnPlayerComboImpact;
         }
 
         private void OnDestroy()
         {
+            AnimationController.OnPlayerComboImpact -= OnPlayerComboImpact;
             GameManager.Instance.OnLevelComplete -= StopCamFollow;
             GameManager.Instance.OnEolTrigger -= OnEndOfLevelTrigger;
             Enemy.OnDeathResetCam -= OnDestinationReachedCllBackDelayed;
@@ -110,5 +113,24 @@ namespace _Game
         {
             _followCamComposer.m_TrackedObjectOffset = _followCamInitialTrackedObjectOffset;
         }
+        private void ZoomFollowCam(float targetFov, float duration)
+        {
+            // Use DoTween to smoothly change the fov
+            DOTween.To(() => followCam.m_Lens.FieldOfView, fov => followCam.m_Lens.FieldOfView = fov, targetFov, duration)
+                .SetEase(Ease.OutQuad)
+                .OnComplete(() =>
+                {
+                    // Restore the initial fov after the zoom effect
+                    DOTween.To(() => followCam.m_Lens.FieldOfView, fov => followCam.m_Lens.FieldOfView = fov, followCamInitialFov, duration)
+                        .SetEase(Ease.OutQuad);
+                });
+        }
+        private void OnPlayerComboImpact(object sender, EventArgs e)
+        {
+            // Trigger the zoom in effect
+            ZoomFollowCam(45f, 0.5f);
+        }
+
+
     }
 }
