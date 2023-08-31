@@ -21,7 +21,8 @@ namespace _Game
         [SerializeField] private ParticleSystem _hitImpact;
         [SerializeField] private Transform _hitImpactSpawnPointRigthFoot;
         [SerializeField] private Transform _hitImpactSpawnPointLeftFoot;
-        [SerializeField] private Transform _hitImpactSpawnPoinHand;
+        [SerializeField] private Transform _hitImpactSpawnPoinRightHand; 
+        [SerializeField] private Transform _hitImpactSpawnPoinLeftHand;
         void Start()
         {
          parentObj = transform.parent.gameObject;
@@ -67,6 +68,8 @@ namespace _Game
             // Construct the trigger parameter name based on the random index
             punchTriggerName = (randomPunchIndex == 0) ? "Punch" : ("Punch" + randomPunchIndex);
             currentEnemy.punchTriggerName = punchTriggerName;
+
+            AnimPlayedCallBack();
             // Set the trigger to play the randomly selected punch animation
             animator.SetTrigger(punchTriggerName);
 
@@ -122,10 +125,15 @@ namespace _Game
             OnPlayerComboImpact?.Invoke(this, EventArgs.Empty);
             Instantiate(_hitImpact, _hitImpactSpawnPointLeftFoot.position, Quaternion.identity);
         }
-        public void PlayHitImpactHand()
+        public void PlayHitImpactRightHand()
         {
             OnPlayerComboImpact?.Invoke(this, EventArgs.Empty);
-            Instantiate(_hitImpact, _hitImpactSpawnPoinHand.position, Quaternion.identity);
+            Instantiate(_hitImpact, _hitImpactSpawnPoinRightHand.position, Quaternion.identity);
+        }
+        public void PlayHitImpactLeftHand()
+        {
+            OnPlayerComboImpact?.Invoke(this, EventArgs.Empty);
+            Instantiate(_hitImpact, _hitImpactSpawnPoinLeftHand.position, Quaternion.identity);
         }
     }
 }
