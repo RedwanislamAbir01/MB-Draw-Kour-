@@ -62,7 +62,7 @@ namespace _Game
         }
         private void OnAllEnemiesDead()
         {
-            Invoke("ResetRoutineStartCam", 2);
+            Invoke("ResetRoutineStartCam", 4);
             enemiesAreDead = true; // Set the flag
         }
         private void ResetRoutineStartCam()
