@@ -9,7 +9,7 @@ namespace _Game
         public event Action OnGotHit;
         public event Action OnShoot;
         public static event Action OnEnemyDeath;
-
+      
         private Animator _animator;
         private Enemy _enemy;
         [SerializeField] private PlayerDetector _playerDetector;
@@ -117,5 +117,6 @@ namespace _Game
         {
             OnShoot?.Invoke();
         }
+
     }
 }

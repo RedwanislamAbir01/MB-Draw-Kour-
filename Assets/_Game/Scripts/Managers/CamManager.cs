@@ -27,8 +27,20 @@ namespace _Game
         private float followCamInitialFov;
         private bool enemiesAreDead = false;
 
+        private CinemachineBasicMultiChannelPerlin _cinemachineBasicMultiChannelPerlin;
+        [Header(" Cam Shake Settings ")]
+        [SerializeField][Min(0f)] private float _shakeIntensity = 6f;
+        [SerializeField][Min(0f)] private float _shakeDuration = 0.2f;
+        [SerializeField] private float _speedBoostShakeIntensity = 0.3f;
+
+
+        private float _initialCameraShakeIntensity;
+        private float _targetCameraShakeDuration;
+        private float _currentCameraShakeDuration;
+        private bool _canShake;
         private void Start()
         {
+            _cinemachineBasicMultiChannelPerlin = actionCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
             // Set initial priorities
             startCam.Priority = startCamPriority;
             followCam.Priority = followCamPriority;
@@ -47,10 +59,12 @@ namespace _Game
             GameManager.Instance.OnLevelComplete += StopCamFollow;
             AnimationController.OnPlayerComboImpact += OnPlayerComboImpact;
             LineFollower.OnCharacterReachedEnemy += ActionCam;
+            AnimationController.OnLastHit += OnLastHit_ShakeCamera;
         }
 
         private void OnDestroy()
         {
+            AnimationController.OnLastHit -= OnLastHit_ShakeCamera;
             LineFollower.OnCharacterReachedEnemy -= ActionCam;
             AnimationController.OnPlayerComboImpact -= OnPlayerComboImpact;
             GameManager.Instance.OnLevelComplete -= StopCamFollow;
@@ -141,7 +155,29 @@ namespace _Game
             // Trigger the zoom in effect
             ZoomFollowCam(45f, 0.5f);
         }
+        void OnLastHit_ShakeCamera() => SetShakeParameters();
+        private void SetShakeParameters(float? intensity = null, float? duration = null)
+        {
+            _cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = intensity ?? _shakeIntensity;
+            _initialCameraShakeIntensity = _cinemachineBasicMultiChannelPerlin.m_AmplitudeGain;
+            _targetCameraShakeDuration = duration ?? _shakeDuration;
+            _currentCameraShakeDuration = _targetCameraShakeDuration;
+            _canShake = true;
+
+            Invoke("ResetShakeParameters", _shakeDuration);
+            Invoke("esetShakeParametersOnGameEnd", _shakeDuration);
+        }
+        private void ResetShakeParameters()
+        {
+            _cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0;
 
 
+        }
+        private void ResetShakeParametersOnGameEnd()
+        {
+            _cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0;
+
+
+        }
     }
 }

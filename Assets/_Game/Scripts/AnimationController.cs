@@ -10,7 +10,7 @@ namespace _Game
     public class AnimationController : MonoBehaviour
     {
         public static event EventHandler OnPlayerComboImpact;
-
+        public static event Action OnLastHit;
         [Header(" Settings ")]
         private Animator animator;
 
@@ -134,6 +134,10 @@ namespace _Game
         {
             OnPlayerComboImpact?.Invoke(this, EventArgs.Empty);
             Instantiate(_hitImpact, _hitImpactSpawnPoinLeftHand.position, Quaternion.identity);
+        }
+        private void LastHit()
+        {
+            OnLastHit?.Invoke();
         }
     }
 }
