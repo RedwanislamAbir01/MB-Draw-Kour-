@@ -1,7 +1,6 @@
 using System;
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using Unity.VisualScripting;
 
@@ -48,9 +47,14 @@ namespace _Game
 
         public void DropGun()
         {
+          
             transform.AddComponent<BoxCollider>();
           
             transform.AddComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+  
+            transform.GetChild(01).gameObject.SetActive(true);
+            transform.GetComponent<MeshRenderer>().enabled = false;
+
             transform.parent = null;
 
         }
