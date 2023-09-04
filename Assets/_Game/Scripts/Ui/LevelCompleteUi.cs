@@ -28,10 +28,20 @@ namespace _Game
             yield return new WaitForSeconds(delay);
             transform.GetChild(0).gameObject.SetActive(true);
         }
-        
+
+        private int currentSceneIndex = 0;
+
         public void NextBtnCallBack()
         {
-            SceneManager.LoadScene(0);
+            if (SceneManager.GetSceneByName("Level_5").isLoaded)
+            {
+                SceneManager.LoadScene("Level_1");
+            }
+            else
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            }
         }
+
     }
 }
