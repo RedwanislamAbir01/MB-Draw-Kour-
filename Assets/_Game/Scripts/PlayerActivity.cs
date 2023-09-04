@@ -17,7 +17,7 @@ namespace _Game
         {
             GameManager.Instance.OnEolTrigger += OnChopperReachedDestination;
             collider = GetComponent<Collider>();
-             rb = GetComponent<Rigidbody>();
+            rb = GetComponent<Rigidbody>();
         }
  
 
