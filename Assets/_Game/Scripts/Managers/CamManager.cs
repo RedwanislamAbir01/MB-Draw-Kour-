@@ -76,7 +76,7 @@ namespace _Game
         }
         private void OnAllEnemiesDead()
         {
-            Invoke("ResetRoutineStartCam", 4);
+            Invoke("ResetRoutineStartCam", 3);
             enemiesAreDead = true; // Set the flag
         }
         private void ResetRoutineStartCam()
@@ -97,7 +97,7 @@ namespace _Game
         }
         private void OnDestinationReachedCllBackDelayed()
         {
-            Invoke("ResetRoutine", 4f);
+            Invoke("ResetRoutine", 3f);
         }
 
         private void ResetRoutine()
