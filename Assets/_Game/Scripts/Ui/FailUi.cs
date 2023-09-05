@@ -32,7 +32,10 @@ namespace _Game
 
         public void RetryBtnCallBack()
         {
-            SceneManager.LoadScene(0);
+            string currentSceneName = SceneManager.GetActiveScene().name;
+
+            // Reload the current scene
+            SceneManager.LoadScene(currentSceneName);
         }
     }
 }
