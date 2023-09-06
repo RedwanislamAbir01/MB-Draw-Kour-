@@ -33,7 +33,7 @@ namespace _Game
 
         public void NextBtnCallBack()
         {
-            if (SceneManager.GetSceneByName("Level_5").isLoaded)
+            if (SceneManager.GetSceneByName("Level_6").isLoaded)
             {
                 SceneManager.LoadScene("Level_1");
             }
