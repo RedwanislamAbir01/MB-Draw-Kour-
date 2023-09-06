@@ -32,12 +32,12 @@ MonoBehaviour:
     - 
     - HomaGames.HomaBelly.AdjustAttributionAdapter
     - HomaGames.HomaBelly.AnalyticsInterfaceForwarder
-    - HomaGames.HomaBelly.GameAnalyticsImplementation,HomaGames.HomaBelly.HomaAnalyticsAdapter,HomaGames.HomaBelly.FacebookImplementation
+    - HomaGames.HomaBelly.FacebookImplementation,HomaGames.HomaBelly.HomaAnalyticsAdapter,HomaGames.HomaBelly.GameAnalyticsImplementation
     - 
     - 1.8.3
     - 1693993974
     - 1693993974
-    - 1694020170
+    - 1693930537
   BoolStore:
     Keys: []
     Values: 

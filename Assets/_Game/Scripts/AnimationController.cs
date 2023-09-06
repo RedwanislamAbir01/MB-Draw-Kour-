@@ -23,14 +23,19 @@ namespace _Game
         [SerializeField] private Transform _hitImpactSpawnPointLeftFoot;
         [SerializeField] private Transform _hitImpactSpawnPoinRightHand; 
         [SerializeField] private Transform _hitImpactSpawnPoinLeftHand;
+        [SerializeField] private Transform _batHitPoint;
+        private bool batCollected;
+
         void Start()
         {
-         parentObj = transform.parent.gameObject;
-         animator = GetComponent<Animator>();    
+            PlayerActivity.OnBatCollected += BatCollected;
+            parentObj = transform.parent.gameObject;
+            animator = GetComponent<Animator>();    
         
         }
         private void OnEnable()
         {
+            
             PlayerActivity.OnHeliCopterJump += PlayJumpToHelicopterAnim;
             LineFollower.OnCharacterStartMoving +=  PlayRunAnimation;
             LineFollower.OnCharacterReachDestination += PlayIdleAnimation;
@@ -40,6 +45,7 @@ namespace _Game
         }
         private void OnDestroy()
         {
+            PlayerActivity.OnBatCollected -= BatCollected;
             CamManager.OnCamReseting -= ChildParentPosFix;
             PlayerActivity.OnHeliCopterJump -= PlayJumpToHelicopterAnim;
             LineFollower.OnCharacterReachedEnemy -= PlayPunchAnimation;
@@ -62,11 +68,21 @@ namespace _Game
             animator.applyRootMotion = true;
             currentEnemy = enemy;
 
-            // Generate a random number between 0 and 2 (inclusive)
-            int randomPunchIndex = UnityEngine.Random.Range(0, 5);
+            if (batCollected)
+            {
+                // Generate a random number between 0 and 1 to select between "Bat1" and "Bat2"
+                int randomBatIndex = UnityEngine.Random.Range(0, 2);
+                punchTriggerName = (randomBatIndex == 0) ? "Bat1" : "Bat2";
+            }
+            else
+            {
+                // Generate a random number between 0 and 2 (inclusive)
+                int randomPunchIndex = UnityEngine.Random.Range(0, 5);
 
-            // Construct the trigger parameter name based on the random index
-            punchTriggerName = (randomPunchIndex == 0) ? "Punch" : ("Punch" + randomPunchIndex);
+                // Construct the trigger parameter name based on the random index
+                punchTriggerName = (randomPunchIndex == 0) ? "Punch" : ("Punch" + randomPunchIndex);
+
+            }
             currentEnemy.punchTriggerName = punchTriggerName;
 
             AnimPlayedCallBack();
@@ -74,6 +90,11 @@ namespace _Game
             animator.SetTrigger(punchTriggerName);
 
 
+        }
+
+        private void BatCollected()
+        {
+            batCollected = true;
         }
         public void AnimPlayedCallBack()
         {
@@ -134,6 +155,11 @@ namespace _Game
         {
             OnPlayerComboImpact?.Invoke(this, EventArgs.Empty);
             Instantiate(_hitImpact, _hitImpactSpawnPoinLeftHand.position, Quaternion.identity);
+        }
+        public void PlayHitImpacBat()
+        {
+            OnPlayerComboImpact?.Invoke(this, EventArgs.Empty);
+            Instantiate(_hitImpact, _batHitPoint.position, Quaternion.identity);
         }
         private void LastHit()
         {
