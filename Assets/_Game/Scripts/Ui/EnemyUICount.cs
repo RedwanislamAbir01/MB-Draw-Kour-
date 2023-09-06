@@ -18,8 +18,10 @@ namespace _Game
 
         private void Start()
         {
+            DisableObj(1);
             GameManager.Instance.OnLevelFail += DisableObj;
             GameManager.Instance.OnLevelComplete += DisableObj;
+            GameManager.Instance.OnLevelStart += EnableObj;
             // Find all Enemy objects in the scene
             Enemy[] enemies = FindObjectsOfType<Enemy>();
             totalEnemies = enemies.Length;
@@ -36,6 +38,7 @@ namespace _Game
 
         private void OnDestroy()
         {
+            GameManager.Instance.OnLevelStart -= EnableObj;
             // Unsubscribe from the OnDeath event of all enemies
             GameManager.Instance.OnLevelFail -= DisableObj;
             Enemy[] enemies = FindObjectsOfType<Enemy>();
@@ -70,5 +73,6 @@ namespace _Game
         }
 
         void DisableObj(float a ) => gameObject.SetActive(false);
+        void EnableObj() =>   gameObject.SetActive(true);
     }
 }

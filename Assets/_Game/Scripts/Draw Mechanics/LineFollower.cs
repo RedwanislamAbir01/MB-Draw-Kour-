@@ -4,7 +4,7 @@ using System;
 using System.Collections;
  using System.Collections.Generic;
  using UnityEngine;
- 
+using DG.Tweening;
 
  
  public class LineFollower : MonoBehaviour {
@@ -256,6 +256,7 @@ using System.Collections;
         if (enemy != null)
         {
             enemy.Stop();
+            other.transform.DOKill(other.transform);
             other.transform.LookAt(transform);
             transform.LookAt(other.transform);
             OnCharacterReachedEnemy?.Invoke(enemy); // Pass the enemy as a parameter

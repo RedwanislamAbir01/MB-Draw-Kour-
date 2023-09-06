@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using UnityEngine;
 
@@ -60,6 +61,8 @@ namespace _Game
             else if (punchTriggerName == "Punch1")
             {
                 _animator.SetTrigger("Hit1");
+                if (_enemy.special)
+                    transform.DOLocalMoveY(-2.520004f, .5f).SetDelay(4);
             }
             else if (punchTriggerName == "Punch2")
             {
@@ -117,6 +120,31 @@ namespace _Game
         {
             OnShoot?.Invoke();
         }
+        //private void Update()
+        //{
+           
+        //        return;
 
+        //    // Cast a ray downwards from the enemy's position
+        //    Ray ray = new Ray(transform.position, Vector3.down);
+        //    RaycastHit hit;
+
+        //    if (Physics.Raycast(ray, out hit))
+        //    {
+        //        // Check if the hit object has a collider
+        //        Collider hitCollider = hit.collider;
+        //        if (hitCollider != null)
+        //        {
+        //            // Print the name of the hit object
+        //            Debug.Log("Hit Object: " + hitCollider.gameObject.name);
+        //            float hitYPosition = hit.point.y;
+        //            Debug.Log("Hit Y Position: " + hitYPosition);
+        //            Vector3 newPosition = transform.position;
+        //            newPosition.y = hitYPosition;
+        //            transform.position = newPosition;
+        //            // You can also perform additional actions here with the hit object if needed.
+        //        }
+        //    }
+        //}
     }
 }

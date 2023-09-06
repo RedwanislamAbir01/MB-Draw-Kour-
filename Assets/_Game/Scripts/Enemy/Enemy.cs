@@ -40,6 +40,7 @@ public class Enemy : MonoBehaviour, IDamageable
     private bool isPatrolling = false;
     private Tweener patrolMoveTween;
     private Tweener patrolRotateTween;
+    public bool special;
     private void Start()
     {
        
@@ -60,6 +61,7 @@ public class Enemy : MonoBehaviour, IDamageable
         PlayerHealth.OnDeath += StopPatrolMechanics;
    
     }
+
 
     private void OnDestroy()
     {
@@ -210,7 +212,7 @@ public class Enemy : MonoBehaviour, IDamageable
              
             });
     }
+  
 
- 
 
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2445903198205386940}
   m_Layer: 6
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Swimmer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -137,7 +137,7 @@ Transform:
   - {fileID: 5232076876698510904}
   - {fileID: 8555496119453872547}
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5390614615823286075
 GameObject:

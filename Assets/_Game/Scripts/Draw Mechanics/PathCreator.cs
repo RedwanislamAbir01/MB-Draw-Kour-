@@ -21,7 +21,7 @@ public class path : MonoBehaviour
     {
         _lineRenderer = GetComponent<LineRenderer>();
         _lineRenderer.enabled = false;
-       
+        _lineRenderer.alignment = LineAlignment.TransformZ;
         _pointsList = new List<Vector3>();
     }
     private void Start()
@@ -63,11 +63,18 @@ public class path : MonoBehaviour
         {
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, _targetDrawingLayer))
             {
-                const float pointGapThreshold = 0.5f;
+                const float pointGapThreshold = 0.1f;
               
                 if (DistanceToLastPoint(hit.point) > pointGapThreshold)
                 {
-                 
+                    if (hit.collider.CompareTag("Swimmer"))
+                    {
+                        _lineRenderer.alignment = LineAlignment.View;
+                    }
+                    else
+                    {
+                        Invoke("LineAlignmentResetDealy", 3);
+                    }
                     // var adjustedPoint = new Vector3(hit.point.x, 0.025f, hit.point.z);
                     var adjustedPoint = new Vector3(hit.point.x, hit.point.y + _lineYOffset, hit.point.z);
                     _pointsList.Add(adjustedPoint);
@@ -87,6 +94,11 @@ public class path : MonoBehaviour
             _currentDrawingSprite = null;
             CompletePathCreation();
         }
+    }
+
+    private void LineAlignmentResetDealy()
+    {
+        _lineRenderer.alignment = LineAlignment.TransformZ;
     }
 
     private float DistanceToLastPoint(Vector3 point)

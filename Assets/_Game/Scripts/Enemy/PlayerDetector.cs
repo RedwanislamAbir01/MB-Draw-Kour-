@@ -15,6 +15,17 @@ namespace _Game
                 transform.parent.LookAt(other.transform.position);
                 GameManager.Instance.LevelFail();
                 OnPlayerDetected?.Invoke();
+
+                MeshRenderer childRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
+                if (childRenderer != null)
+                {
+                    Material material = childRenderer.material;
+                    Color newColor = childRenderer.material.color = Color.red;
+                    newColor.a = 0.50f; // Set the alpha component to 34% (0.34) * always avoid magic numbers like this 
+                    material.color = newColor;
+                }
+
+
             }
         }
     }

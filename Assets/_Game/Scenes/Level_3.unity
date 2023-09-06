@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.2689522, g: 0.4646948, b: 0.61452705, a: 1}
+  m_IndirectSpecularColor: {r: 0.2667098, g: 0.46280587, b: 0.6136352, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4480,6 +4480,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 171251334258600997, guid: b09fe4e4f7244d048a3bfd81a291a5f7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1983021731569408796, guid: b09fe4e4f7244d048a3bfd81a291a5f7,
         type: 3}
       propertyPath: m_Name
@@ -5087,7 +5092,7 @@ LineRenderer:
       m_NumAlphaKeys: 2
     numCornerVertices: 90
     numCapVertices: 0
-    alignment: 0
+    alignment: 1
     textureMode: 0
     textureScale: {x: 1, y: 1}
     shadowBias: 0.5
@@ -5744,6 +5749,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.0010921732
+      objectReference: {fileID: 0}
+    - target: {fileID: 2025519593687497221, guid: 06e3f253bc09f5f45897d9168d6d6aad,
+        type: 3}
+      propertyPath: special
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2116985833124594170, guid: 06e3f253bc09f5f45897d9168d6d6aad,
         type: 3}
@@ -9296,6 +9306,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2056762297}
   - component: {fileID: 2056762296}
+  - component: {fileID: 2056762298}
   m_Layer: 0
   m_Name: Post Processing
   m_TagString: Untagged
@@ -9335,6 +9346,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2056762298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056762295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f43e7f889e3b7d345b2c0c91b11a2bba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  postProcessVolume: {fileID: 0}
+  bloom: {fileID: 0}
 --- !u!1001 &2068676911
 PrefabInstance:
   m_ObjectHideFlags: 0

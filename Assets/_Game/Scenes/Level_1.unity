@@ -3907,7 +3907,7 @@ LineRenderer:
       m_NumAlphaKeys: 2
     numCornerVertices: 90
     numCapVertices: 0
-    alignment: 0
+    alignment: 1
     textureMode: 0
     textureScale: {x: 1, y: 1}
     shadowBias: 0.5
@@ -4016,7 +4016,7 @@ PrefabInstance:
     - target: {fileID: 1022583754510475971, guid: f68b83b9ed2f95949b03e6b82166f965,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 117.97
+      value: 171.44
       objectReference: {fileID: 0}
     - target: {fileID: 4607527795220437922, guid: f68b83b9ed2f95949b03e6b82166f965,
         type: 3}
@@ -4220,15 +4220,40 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 5113819696136058103, guid: f68b83b9ed2f95949b03e6b82166f965,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 2.8710938
+      objectReference: {fileID: 0}
     - target: {fileID: 5984536489581284633, guid: f68b83b9ed2f95949b03e6b82166f965,
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 18.000244
       objectReference: {fileID: 0}
+    - target: {fileID: 6738106760264257415, guid: f68b83b9ed2f95949b03e6b82166f965,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -52.100098
+      objectReference: {fileID: 0}
+    - target: {fileID: 8117997516214249006, guid: f68b83b9ed2f95949b03e6b82166f965,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.43137255
+      objectReference: {fileID: 0}
     - target: {fileID: 8249984714836471538, guid: f68b83b9ed2f95949b03e6b82166f965,
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8997698114902947343, guid: f68b83b9ed2f95949b03e6b82166f965,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 15.659912
+      objectReference: {fileID: 0}
+    - target: {fileID: 8997698114902947343, guid: f68b83b9ed2f95949b03e6b82166f965,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 171.44
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5781,7 +5806,7 @@ MonoBehaviour:
   followCam: {fileID: 1112143936}
   endCam: {fileID: 1209557639}
   actionCam: {fileID: 978649402}
-  _shakeIntensity: 6
+  _shakeIntensity: 10
   _shakeDuration: 0.2
   _speedBoostShakeIntensity: 0.3
 --- !u!1001 &1605956930
@@ -7387,7 +7412,7 @@ PrefabInstance:
     - target: {fileID: 2116985833124594170, guid: 06e3f253bc09f5f45897d9168d6d6aad,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2183565403375891758, guid: 06e3f253bc09f5f45897d9168d6d6aad,
         type: 3}
@@ -8687,6 +8712,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2056762297}
   - component: {fileID: 2056762296}
+  - component: {fileID: 2056762298}
   m_Layer: 0
   m_Name: Post Processing
   m_TagString: Untagged
@@ -8726,6 +8752,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2056762298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056762295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f43e7f889e3b7d345b2c0c91b11a2bba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  postProcessVolume: {fileID: 0}
+  bloom: {fileID: 0}
 --- !u!1001 &2068676911
 PrefabInstance:
   m_ObjectHideFlags: 0

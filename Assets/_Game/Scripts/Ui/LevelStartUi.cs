@@ -11,7 +11,7 @@ namespace _Game
 
         public void StartBtnCallBack()
         {
-           
+            GameManager.Instance.LevelStart();
             gameObject.SetActive(false);
            
         }

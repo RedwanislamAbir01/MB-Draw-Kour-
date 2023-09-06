@@ -138620,15 +138620,15 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 2.3333333
-    functionName: PlayHitImpactRigthFoot
+  - time: 2.3
+    functionName: LastHit
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 2.3333333
-    functionName: LastHit
+  - time: 2.3
+    functionName: PlayHitImpactRigthFoot
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

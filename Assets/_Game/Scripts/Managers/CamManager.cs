@@ -40,6 +40,7 @@ namespace _Game
         private bool _canShake;
         private void Start()
         {
+            _shakeIntensity = 10;
             _cinemachineBasicMultiChannelPerlin = actionCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
             // Set initial priorities
             startCam.Priority = startCamPriority;
@@ -60,10 +61,18 @@ namespace _Game
             AnimationController.OnPlayerComboImpact += OnPlayerComboImpact;
             LineFollower.OnCharacterReachedEnemy += ActionCam;
             AnimationController.OnLastHit += OnLastHit_ShakeCamera;
+            PlayerWallRun.OnWallRunStarted += WallRunZoomIn;
+            PlayerWallRun.OnWallRunStopped += WallRunReset;
+            PlayerZipLining.OnZipLineStarted += ZipLineZoomIn;
+            PlayerZipLining.OnZipLineStopped += WallRunReset;
         }
 
         private void OnDestroy()
         {
+            PlayerZipLining.OnZipLineStarted -= ZipLineZoomIn;
+            PlayerZipLining.OnZipLineStopped -= WallRunReset;
+            PlayerWallRun.OnWallRunStarted -= WallRunZoomIn;
+            PlayerWallRun.OnWallRunStopped -= WallRunReset;
             AnimationController.OnLastHit -= OnLastHit_ShakeCamera;
             LineFollower.OnCharacterReachedEnemy -= ActionCam;
             AnimationController.OnPlayerComboImpact -= OnPlayerComboImpact;
@@ -153,8 +162,23 @@ namespace _Game
         private void OnPlayerComboImpact(object sender, EventArgs e)
         {
             // Trigger the zoom in effect
-            ZoomFollowCam(45f, 0.5f);
+            ZoomFollowCam(40f, 0.5f);
         }
+
+        private void WallRunZoomIn()
+        {
+            DOTween.To(() =>followCam.m_Lens.FieldOfView, fov => followCam.m_Lens.FieldOfView = fov, 45, .4f);
+        }
+        private void WallRunReset()
+        {
+            DOTween.To(() => followCam.m_Lens.FieldOfView, fov => followCam.m_Lens.FieldOfView = fov, 55, .1f)
+                                  .SetEase(Ease.OutQuad);
+        }
+        private void ZipLineZoomIn()
+        {
+            DOTween.To(() => followCam.m_Lens.FieldOfView, fov => followCam.m_Lens.FieldOfView = fov, 65, .4f);
+        }
+      
         void OnLastHit_ShakeCamera() => SetShakeParameters();
         private void SetShakeParameters(float? intensity = null, float? duration = null)
         {

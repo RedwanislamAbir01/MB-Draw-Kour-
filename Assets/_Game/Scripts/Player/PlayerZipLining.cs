@@ -7,6 +7,8 @@ namespace _Game
     [RequireComponent(typeof(LineFollower))]
     public class PlayerZipLining : MonoBehaviour
     {
+        public static event Action OnZipLineStarted;
+        public static event Action OnZipLineStopped;
         [SerializeField] private Animator _animator;
         [SerializeField] private LineFollower _lineFollower;
         [SerializeField] private Vector3 _camOffset;
@@ -34,7 +36,7 @@ namespace _Game
             {
                 startHandle.SetActive(false);
                 _playerHandle.SetActive(true);
-                
+                OnZipLineStarted?.Invoke();
                 transform.DOMove(endPoint.position, zipDuration).SetEase(Ease.Linear).OnComplete(() =>
                 {
                     _animator.ResetTrigger(_Run);
@@ -45,6 +47,7 @@ namespace _Game
                     
                     transform.DOMove(dropPoint.position, jumpDuration).OnComplete(() =>
                     {
+                        OnZipLineStopped?.Invoke();
                         landEffect.Play();
                         PlayerState.Instance.SetState(PlayerState.State.Default);
                         CamManager.Instance.EnableStartCam();

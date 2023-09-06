@@ -1,10 +1,13 @@
 ﻿using DG.Tweening;
+using System;
 using UnityEngine;
 
 namespace _Game
 {
     public class PlayerWallRun : MonoBehaviour
     {
+        public static event Action OnWallRunStarted;
+        public static event Action OnWallRunStopped;
         [SerializeField] private Animator _animator;
         [SerializeField] private LineFollower _lineFollower;
         [SerializeField] private ParticleSystem[] _dustTrails;
@@ -46,6 +49,7 @@ namespace _Game
 
         private void StartWallRun(Vector3 direction, Vector3 targetPosition)
         {
+            OnWallRunStarted?.Invoke();
             _lineFollower.ClearLine();
             PlayerState.Instance.SetState(PlayerState.State.Parkour);
 
@@ -70,6 +74,7 @@ namespace _Game
 
         private void StopWallRun()
         {
+            OnWallRunStopped?.Invoke();
             _animator.ResetTrigger(_Run);
             _animator.SetTrigger(_WallRunStop);
 

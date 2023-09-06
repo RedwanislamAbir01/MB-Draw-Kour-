@@ -1,6 +1,5 @@
 using _Game.Managers;
-using System.Collections;
-using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 namespace _Game
@@ -10,6 +9,9 @@ namespace _Game
         [SerializeField] private GameObject _visulas;
         private void Start()
         {
+            _visulas.transform.DOScale(0.15f, 1f)
+                    .SetLoops(-1, LoopType.Yoyo) // Loops the scaling back and forth indefinitely
+                    .SetEase(Ease.InOutQuad); // You can change the easing function if needed
             DisableObj();
             EnemyUICount.OnAllEnimiesDead += EnableObj;
         }
