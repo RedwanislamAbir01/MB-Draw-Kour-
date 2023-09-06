@@ -63,7 +63,7 @@ namespace _Game
             currentEnemy = enemy;
 
             // Generate a random number between 0 and 2 (inclusive)
-            int randomPunchIndex = UnityEngine.Random.Range(0, 3);
+            int randomPunchIndex = UnityEngine.Random.Range(0, 5);
 
             // Construct the trigger parameter name based on the random index
             punchTriggerName = (randomPunchIndex == 0) ? "Punch" : ("Punch" + randomPunchIndex);
