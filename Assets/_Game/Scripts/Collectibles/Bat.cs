@@ -9,6 +9,7 @@ namespace _Game
     {
         [SerializeField] private Transform _visual;
         [SerializeField] private Vector3 _rotationAxis = Vector3.forward;
+        [SerializeField] private ParticleSystem _poofEffect ;
         [SerializeField][Range(1f, 5000f)] private float _rotationSpeed = 500f;
 
         // Fixed X-axis rotation value
@@ -25,6 +26,8 @@ namespace _Game
 
         public void Collect()
         {
+            _poofEffect.transform.parent = null;
+            _poofEffect.Play();
             gameObject.SetActive(false);
             transform.DOKill();
         }
