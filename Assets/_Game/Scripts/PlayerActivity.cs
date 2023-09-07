@@ -9,12 +9,16 @@ namespace _Game
     public class PlayerActivity : MonoBehaviour
     {
         public static event Action OnHeliCopterJump;
+        public static event Action OnBatCollected;
 
         Rigidbody rb;
 
         Collider collider;
+
+        [SerializeField] private GameObject _bat;
         private void Start()
         {
+            _bat.gameObject.SetActive(false);
             GameManager.Instance.OnEolTrigger += OnChopperReachedDestination;
             collider = GetComponent<Collider>();
             rb = GetComponent<Rigidbody>();
@@ -43,6 +47,20 @@ namespace _Game
                     GameManager.Instance.LevelComplete();
                 }
             );
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if(other.gameObject.GetComponent<Bat>())
+            {
+                other.GetComponent<Bat>().Collect();
+                EnableBat();
+                OnBatCollected?.Invoke();
+            }
+        }
+        void EnableBat()
+        {
+            _bat.gameObject.SetActive(true);
         }
     }
 }

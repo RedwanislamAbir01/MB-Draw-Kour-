@@ -68,6 +68,22 @@ namespace _Game
             {
                 _animator.SetTrigger("Hit2");
             }
+            else if (punchTriggerName == "Punch3")
+            {
+                _animator.SetTrigger("Hit3");
+            }
+            else if (punchTriggerName == "Punch4")
+            {
+                _animator.SetTrigger("Hit4");
+            }
+            else if (punchTriggerName == "Bat1")
+            {
+                _animator.SetTrigger("BatHit1");
+            }
+            else if (punchTriggerName == "Bat2")
+            {
+                _animator.SetTrigger("BatHit2");
+            }
             if (GetComponentInChildren<EnemyGun>() != null)
             GetComponentInChildren<EnemyGun>().DropGun();
         }

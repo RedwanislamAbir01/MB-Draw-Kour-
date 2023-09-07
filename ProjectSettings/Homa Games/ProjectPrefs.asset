@@ -32,7 +32,7 @@ MonoBehaviour:
     - 
     - HomaGames.HomaBelly.AdjustAttributionAdapter
     - HomaGames.HomaBelly.AnalyticsInterfaceForwarder
-    - HomaGames.HomaBelly.GameAnalyticsImplementation,HomaGames.HomaBelly.HomaAnalyticsAdapter,HomaGames.HomaBelly.FacebookImplementation
+    - HomaGames.HomaBelly.FacebookImplementation,HomaGames.HomaBelly.HomaAnalyticsAdapter,HomaGames.HomaBelly.GameAnalyticsImplementation
     - 
     - 1.8.3
     - 1693993974
