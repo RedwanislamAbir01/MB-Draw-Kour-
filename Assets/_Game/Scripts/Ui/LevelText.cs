@@ -1,15 +1,27 @@
+using _Game.Helpers;
 using _Game.Managers;
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace _Game
 {
     public class LevelText : MonoBehaviour
     {
-        // Start is called before the first frame update
+        TextMeshProUGUI _levelText;
+        private void Awake()
+        {
+            _levelText = GetComponent<TextMeshProUGUI>();
+        }
+
         void Start()
         {
+            var inGameLevelCount = PlayerPrefs.GetInt(ConstUtils.IN_GAME_LEVEL_COUNT) ;
+            if(inGameLevelCount == 0)
+            {
+                inGameLevelCount = 01;
+            }
+            _levelText.text = "Level " + inGameLevelCount.ToString();
+
             EnableObj();
             GameManager.Instance.OnLevelStart += DisableObj;
         }

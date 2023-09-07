@@ -1,4 +1,5 @@
 using _Game.Managers;
+using _Tools.Helpers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,14 +34,10 @@ namespace _Game
 
         public void NextBtnCallBack()
         {
-            if (SceneManager.GetSceneByName("Level_7").isLoaded)
-            {
-                SceneManager.LoadScene("Level_1");
-            }
-            else
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-            }
+            var nextSceneIndex = LevelManager.Instance.GetNextSceneIndex();
+          
+           SceneUtils.LoadSpecificScene(nextSceneIndex);
+            
         }
 
     }
